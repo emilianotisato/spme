@@ -13,14 +13,13 @@
 
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 	<style>
-		{{--  @if(!Auth::check()) 
-			@if(config('backend.background_image')) #main {
-				background-image: url("/{{config('backend.background_image')}}");
+		@if(!Auth::check()) 
+			@if(config('app.background_image')) #main {
+				background-image: url("/{{config('app.background_image')}}");
 				background-size: cover;
 			}
-
 			@endif 
-		@endif  --}}
+		@endif
 	</style>
 
 </head>
@@ -28,16 +27,15 @@
 <body>
 	<div id="vue-container">
 		@if(Auth::check())
-		<v-app {{ config( 'backend.theme') }} v-cloak>
-			{{--  <v-navigation-drawer class="{{ config('backend.sidebar_color') }}" {{ config( 'backend.sidebar_theme') }} persistent :mini-variant.sync="mini"  --}}
-			<v-navigation-drawer  persistent :mini-variant.sync="mini"
+		<v-app {{ config( 'app.theme') }} v-cloak>
+			<v-navigation-drawer class="{{ config('app.sidebar_color') }}" {{ config( 'app.sidebar_theme') }} persistent :mini-variant.sync="mini"
 			 v-model="drawer" overflow>
 				<v-toolbar flat class="transparent">
 					<v-list class="pa-0">
 						<v-list-tile avatar tag="div" router to="perfil">
 							<v-list-tile-avatar>
 								<v-icon >account_circle</v-icon>
-								{{--  <v-icon {{ config( 'backend.sidebar_icons') }}>account_circle</v-icon>  --}}
+								{{--  <v-icon {{ config( 'app.sidebar_icons') }}>account_circle</v-icon>  --}}
 							</v-list-tile-avatar>
 							<v-list-tile-content>
 								<v-list-tile-title>@{{ $store.state.auth_user.name }}</v-list-tile-title>
@@ -49,8 +47,7 @@
 					<v-divider></v-divider>
 					<v-list-tile v-for="item in menuItems" :key="item.title" router :to="item.link" v-show="item.show">
 						<v-list-tile-action>
-							<v-icon >@{{ item.icon }}</v-icon>
-							{{--  <v-icon {{ config( 'backend.sidebar_icons') }}>@{{ item.icon }}</v-icon>  --}}
+							<v-icon {{ config( 'app.sidebar_icons') }}>@{{ item.icon }}</v-icon>
 						</v-list-tile-action>
 						<v-list-tile-content>
 							<v-list-tile-title>@{{ item.title }}</v-list-tile-title>
@@ -60,8 +57,7 @@
 				<v-divider dark></v-divider>
 				<div v-if="!mini">
 					<v-subheader class="mt-3 white--text text--darken-1">
-						<v-icon  left>event</v-icon>&nbsp;&nbsp;AGENDA</v-subheader>
-						{{--  <v-icon {{ config( 'backend.sidebar_icons') }} left>event</v-icon>&nbsp;&nbsp;AGENDA</v-subheader>  --}}
+						<v-icon {{ config( 'app.sidebar_icons') }} left>event</v-icon>&nbsp;&nbsp;AGENDA</v-subheader>
 					<v-switch :label="eventsLabel" dark v-model="myEvents" class="ml-4"></v-switch>
 					<div v-if="eventList.length >= 1" id="upcomingEvents">
 						<v-list-tile avatar v-for="update in eventList" :key="update.id" :class="{'error' : update.isDueDude }" @click.prevent.stop="updateEventClicked(update.ticket_id)">
@@ -80,14 +76,17 @@
 					</span>
 				</div>
 			</v-navigation-drawer>
-			<v-toolbar fixed class="{{ config('backend.main_color') }}" dark>
+			<v-toolbar fixed class="{{ config('app.main_color') }}" dark>
 				<div class="hidden-sm-and-down">
 					<v-toolbar-side-icon @click.prevent.stop="mini = !mini"></v-toolbar-side-icon>
 				</div>
 				<v-toolbar-title>
 					<router-link to="/" tag="span" style="cursor: pointer">
-						{{--  @if(config('backend.logo') !== null)
-						<img src="{{ config('backend.logo') }}" alt="{{ config('app.name') }}"> @else {{ config('app.name') }} @endif  --}}
+						@if(config('app.logo') !== null)
+							<img src="{{ config('app.logo') }}" alt="{{ config('app.name') }}"> 
+						@else 
+							{{ config('app.name') }} 
+						@endif
 					</router-link>
 				</v-toolbar-title>
 				<div style="margin: auto" v-show="loader">
@@ -109,14 +108,15 @@
 			<notifications group="error" classes="vue-notification error" position="bottom right"></notifications>
 		</v-app>
 		@else
-		<v-app  v-cloak>
-		{{--  <v-app {{ config( 'backend.theme') }} v-cloak>  --}}
-			<v-toolbar fixed class="" dark>
-			{{--  <v-toolbar fixed class="{{ config('backend.main_color') }}" dark>  --}}
+		<v-app {{ config( 'app.theme') }} v-cloak>
+			<v-toolbar fixed class="{{ config('app.main_color') }}" dark>
 				<v-toolbar-title>
 					<router-link to="/" tag="span" style="cursor: pointer">
-						{{--  @if(config('backend.logo') !== null)
-						<img src="{{ config('backend.logo') }}" alt="{{ config('app.name') }}"> @else {{ config('app.name') }} @endif  --}}
+						@if(config('app.logo') !== null)
+							<img src="{{ config('app.logo') }}" alt="{{ config('app.name') }}"> 
+						@else 
+							{{ config('app.name') }} 
+						@endif
 					</router-link>
 					<v-btn class="primary elevation-4" dark absolute right>
 						<v-icon left>call</v-icon>&nbsp;&nbsp;Teléfono: 011 4775-2992&nbsp;&nbsp;&nbsp;
@@ -129,8 +129,7 @@
 					<v-layout row wrap>
 						<v-flex xs10 offset-xs1 md6 offset-md3>
 							<v-card dark class="animated fadeInUp grey lighten-4">
-								<v-toolbar class="" dark>
-								{{--  <v-toolbar class="{{ config('backend.main_color') }}" dark>  --}}
+								<v-toolbar class="{{ config('app.main_color') }}" dark>
 									<v-toolbar-title>Ingresar al sistema</v-toolbar-title>
 								</v-toolbar>
 								<v-card-text>

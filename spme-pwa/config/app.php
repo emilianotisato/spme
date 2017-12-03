@@ -1,10 +1,9 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
-    | Application Name
+    | Application Name and Theme
     |--------------------------------------------------------------------------
     |
     | This value is the name of your application. This value is used when the
@@ -13,7 +12,15 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Laravel'),
+    'name' => env('APP_NAME', 'Spme!'),
+
+    'logo' => env('APP_LOGO', 'logo.png'),
+    'background_image' => env('APP_BG_IMAGE', 'bg.jpg'),
+    'theme' => env('APP_THEME', 'light'),
+    'main_color' => env('APP_MAIN_COLOR', 'light-blue darken-4'),
+    'sidebar_theme' => env('APP_SIDEBAR_THEME', 'dark'),
+    'sidebar_icons' => env('APP_SIDEBAR_ICONS', 'dark'),
+    'sidebar_color' => env('APP_SEDEBAR_COLOR', 'grey darken-3'),
 
     /*
     |--------------------------------------------------------------------------
@@ -137,7 +144,6 @@ return [
     */
 
     'providers' => [
-
         /*
          * Laravel Framework Service Providers...
          */
@@ -176,7 +182,6 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
     ],
 
     /*
@@ -191,7 +196,6 @@ return [
     */
 
     'aliases' => [
-
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,
@@ -225,7 +229,5 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
     ],
-
 ];
