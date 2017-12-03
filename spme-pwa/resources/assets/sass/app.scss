@@ -1,9 +1,16 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:300,400,600);
+@import url(https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons);
+@import "./animate.css";
 
-// Fonts
-@import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
 
 // Variables
-@import "variables";
 
-// Bootstrap
-@import "~bootstrap-sass/assets/stylesheets/bootstrap";
+// Custome rules
+[v-cloak] {display: none}
+
+#upcomingEvents li {list-style: none;}
+
+// For printing
+@media print {
+  .icon {display: none !important; visibility: hidden !important;}
+}
