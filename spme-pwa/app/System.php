@@ -27,4 +27,32 @@ class System
             return true;
         }
     }
+
+    /**
+     * Set/update enviroment values in the root .env file
+     *
+     * @param [type] $envKey
+     * @param [type] $envValue
+     * @return void
+     */
+    public static function setEnvironmentValue($envKey, $envValue)
+    {
+        // If we have the key, replace it
+        if (preg_match("/^{$envKey}/m", file_get_contents(app()->environmentFilePath()))) {
+            file_put_contents(
+                app()->environmentFilePath(),
+                preg_replace(
+                    "/^{$envKey}.*/m", // Replace the complete line
+                    $envKey . '=' . $envValue, // By this new key value pair
+                    file_get_contents(app()->environmentFilePath())
+                )
+            );
+        } else { // Else append to the file as a new key value pair
+            file_put_contents(
+                app()->environmentFilePath(),
+                $envKey . '=' . $envValue . PHP_EOL,
+                FILE_APPEND
+            );
+        }
+    }
 }
