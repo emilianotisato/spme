@@ -14,10 +14,10 @@ return [
 
     'name' => env('APP_NAME', 'Spme!'),
 
-    'logo' => env('APP_LOGO', 'logo.png'),
-    'background_image' => env('APP_BG_IMAGE', 'bg.jpg'),
+    'logo' => env('APP_LOGO', 'img/logo/logo.png'),
+    'background_image' => env('APP_BG_IMAGE', 'img/bg/bg.jpg'),
     'theme' => env('APP_THEME', 'light'),
-    'main_color' => env('APP_MAIN_COLOR', 'light-blue darken-4'),
+    'main_color' => env('APP_MAIN_COLOR', 'blue darken-1'),
     'sidebar_theme' => env('APP_SIDEBAR_THEME', 'dark'),
     'sidebar_icons' => env('APP_SIDEBAR_ICONS', 'dark'),
     'sidebar_color' => env('APP_SEDEBAR_COLOR', 'grey darken-3'),

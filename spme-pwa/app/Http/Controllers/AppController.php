@@ -2,16 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\System;
 use Illuminate\Http\Request;
 
 class AppController extends Controller
 {
     public function index()
     {
-        if (System::isFirstInstall()) {
-            dd('run installer...');
-        }
         return view('app');
     }
 

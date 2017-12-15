@@ -83,7 +83,7 @@
 				<v-toolbar-title>
 					<router-link to="/" tag="span" style="cursor: pointer">
 						@if(config('app.logo') !== null)
-							<img src="{{ config('app.logo') }}" alt="{{ config('app.name') }}"> 
+							<img height="50px" src="{{ config('app.logo') }}" alt="{{ config('app.name') }}"> 
 						@else 
 							{{ config('app.name') }} 
 						@endif
@@ -113,14 +113,14 @@
 				<v-toolbar-title>
 					<router-link to="/" tag="span" style="cursor: pointer">
 						@if(config('app.logo') !== null)
-							<img src="{{ config('app.logo') }}" alt="{{ config('app.name') }}"> 
+							<img height="50px" src="{{ config('app.logo') }}" alt="{{ config('app.name') }}"> 
 						@else 
 							{{ config('app.name') }} 
 						@endif
 					</router-link>
 					<v-btn class="primary elevation-4" dark absolute right>
-						<v-icon left>call</v-icon>&nbsp;&nbsp;Teléfono: 011 4775-2992&nbsp;&nbsp;&nbsp;
-						<v-icon left>email</v-icon>&nbsp;&nbsp;info@hfittipaldi.com.ar
+						<v-icon left>call</v-icon>&nbsp;&nbsp;+54 911 3236 3848&nbsp;&nbsp;&nbsp;
+						<v-icon left>email</v-icon>&nbsp;&nbsp;info@thormaweb.com
 					</v-btn>
 				</v-toolbar-title>
 			</v-toolbar>
