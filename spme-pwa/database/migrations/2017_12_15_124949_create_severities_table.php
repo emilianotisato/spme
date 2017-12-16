@@ -18,8 +18,6 @@ class CreateSeveritiesTable extends Migration
 
             $table->integer('level');
             $table->string('label');
-
-            $table->timestamps();
         });
     }
 

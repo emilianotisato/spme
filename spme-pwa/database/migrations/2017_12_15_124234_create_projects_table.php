@@ -23,9 +23,6 @@ class CreateProjectsTable extends Migration
             $table->longText('notes');
             $table->longText('secrets');
 
-            $table->string('notifications_frequency');
-            $table->timestamp('last_notification')->nullable();
-
             $table->timestamps();
         });
     }

@@ -17,9 +17,13 @@ class CreateUsersTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('email')->unique();
+            $table->string('password');
+
+            $table->integer('client_id')->unsigned()->nullable()->default(null);
+            $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
+
             $table->boolean('receive_notifications')->default(false);
             $table->longText('config')->nullable();
-            $table->string('password');
             $table->rememberToken();
             $table->timestamps();
         });

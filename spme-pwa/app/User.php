@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'config', 'receive_notifications'
+        'name', 'email', 'password', 'client_id', 'config', 'receive_notifications'
     ];
 
     /**
@@ -46,7 +46,12 @@ class User extends Authenticatable
         return $this->hasMany(Task::class);
     }
 
-    public function taskUpdates()
+    /**
+     * Updates leved by this user
+     *
+     * @return void
+     */
+    public function updates()
     {
         return $this->hasMany(Update::class);
     }
