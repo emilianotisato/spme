@@ -7,13 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Severity extends Model
 {
     /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = ['deleted_at'];
-
-    /**
      * Disabling eloquent timestamps
      */
     public $timestamps = false;

@@ -19,9 +19,9 @@ class CreateProjectsTable extends Migration
             $table->foreign('client_id')->references('id')->on('clients')->onDelete('cascade');
 
             $table->string('name');
-            $table->string('website');
-            $table->longText('notes');
-            $table->longText('secrets');
+            $table->string('website')->nullable();
+            $table->longText('notes')->nullable();
+            $table->longText('secrets')->nullable();
 
             $table->timestamps();
         });

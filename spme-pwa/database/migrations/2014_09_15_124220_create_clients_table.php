@@ -18,9 +18,9 @@ class CreateClientsTable extends Migration
 
             $table->string('name');
 
-            $table->longText('config');
-            $table->longText('notes');
-            $table->longText('secrets');
+            $table->longText('config')->nullable();
+            $table->longText('notes')->nullable();
+            $table->longText('secrets')->nullable();
 
             $table->timestamps();
         });

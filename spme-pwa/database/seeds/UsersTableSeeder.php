@@ -56,11 +56,43 @@ class UsersTableSeeder extends Seeder
         $freelance->givePermissionTo($create_tasks);
         $freelance->givePermissionTo($close_tasks);
 
+        $admin = User::create(['name' => 'Emiliano', 'email' => 'info@thormaweb.com', 'password' => Hash::make('Nf1959')]);
+        $admin->assignRole('admin');
+
         if (App::isLocal()) {
-            $emi = User::create(['name' => 'Emiliano', 'email' => 'info@thormaweb.com', 'password' => Hash::make('123')]);
-            $emi->assignRole('admin');
+            // Create staff
+            factory(User::class, 2)->create()->each(function ($user) {
+                $user->assignRole('manager');
+            });
+
+            factory(User::class, 10)->create()->each(function ($user) {
+                $user->assignRole('staff');
+            });
+
+            factory(User::class, 25)->create()->each(function ($user) {
+                $user->assignRole('freelance');
+            });
+
+            // Create some clients
+            factory(App\Client::class, 50)->create()->each(function ($client) {
+                $user = factory(User::class)->make();
+                $this->convertToClient($user, $client);
+
+                if (rand(0, 1) == 0) { // Some clients has more than one user
+                    factory(User::class, rand(1, 3))->create()->each(function ($user) use ($client) {
+                        $this->convertToClient($user, $client);
+                    });
+                }
+            });
         }
 
         app()['cache']->forget('spatie.permission.cache');
+    }
+
+    private function convertToClient($user, $client)
+    {
+        $user->client_id = $client->id;
+        $user->save();
+        $user->assignRole('client');
     }
 }

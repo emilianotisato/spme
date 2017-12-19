@@ -34,7 +34,7 @@ class CreateTasksTable extends Migration
 
             $table->boolean('client_visibility')->default(true);
             $table->string('subject');
-            $table->longText('description');
+            $table->longText('description')->nullable();
             $table->timestamp('closed')->nullable()->default(null);
 
             $table->timestamps();

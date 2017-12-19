@@ -16,7 +16,6 @@ class DatabaseSeeder extends Seeder
         $this->call(StatusesTableSeeder::class);
 
         if (App::isLocal()) {
-            $this->call(ClientsTableSeeder::class);
             $this->call(ProjectsTableSeeder::class);
             $this->call(TasksTableSeeder::class);
         }
