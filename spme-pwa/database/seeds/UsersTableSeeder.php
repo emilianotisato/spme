@@ -56,6 +56,9 @@ class UsersTableSeeder extends Seeder
         $freelance->givePermissionTo($create_tasks);
         $freelance->givePermissionTo($close_tasks);
 
+        /**
+         * Set aplication admin user
+         */
         $admin = User::create(['name' => 'Emiliano', 'email' => 'info@thormaweb.com', 'password' => Hash::make('Nf1959')]);
         $admin->assignRole('admin');
 
@@ -85,8 +88,6 @@ class UsersTableSeeder extends Seeder
                 }
             });
         }
-
-        app()['cache']->forget('spatie.permission.cache');
     }
 
     private function convertToClient($user, $client)
