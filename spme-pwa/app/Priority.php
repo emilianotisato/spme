@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Severity extends Model
+class Priority extends Model
 {
     /**
      * Disabling eloquent timestamps

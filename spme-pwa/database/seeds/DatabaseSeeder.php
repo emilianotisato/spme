@@ -12,7 +12,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(UsersTableSeeder::class);
-        $this->call(SeveritiesTableSeeder::class);
+        $this->call(PrioritiesTableSeeder::class);
         $this->call(StatusesTableSeeder::class);
 
         if (App::isLocal()) {
