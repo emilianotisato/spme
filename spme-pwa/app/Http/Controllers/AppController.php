@@ -8,7 +8,7 @@ class AppController extends Controller
 {
     public function index()
     {
-        return view('app');
+        return view('app2');
     }
 
     public function resetpass(Request $request)
