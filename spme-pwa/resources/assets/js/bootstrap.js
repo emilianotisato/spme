@@ -2,15 +2,15 @@
  * Main boostrap.
  */
 import Vue from "vue";
-import Notifications from "vue-notification";
-import VueRouter from "vue-router";
-import Form from "./utilities/Form";
 import Moment from "moment";
 import Vuetify from "vuetify";
+import VueRouter from "vue-router";
+import Form from "./utilities/Form";
+import Notifications from "vue-notification";
 
-Vue.use(Notifications);
 Vue.use(Vuetify);
 Vue.use(VueRouter);
+Vue.use(Notifications);
 
 window.Vue = Vue;
 window.Form = Form;
