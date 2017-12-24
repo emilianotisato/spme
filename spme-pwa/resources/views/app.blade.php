@@ -1,195 +1,239 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{ config('app.name') }}</title>
 
-	<title>{{ config('app.name') }}</title>
-
-	<link href="{{ asset('css/app.css') }}" rel="stylesheet">
+	<link href="{{ mix('/css/app.css') }}" rel="stylesheet">
 	<link href="{{ asset('css/vuetify.min.css') }}" rel="stylesheet">
 
 	<meta name="csrf-token" content="{{ csrf_token() }}">
-	<style>
-		@if(!Auth::check()) 
-			@if(config('app.background_image')) #main {
-				background-image: url("/{{config('app.background_image')}}");
-				background-size: cover;
-			}
-			@endif 
-		@endif
-	</style>
-
 </head>
-
 <body>
-	<div id="vue-container">
-		@if(Auth::check())
-		<v-app {{ config( 'app.theme') }} v-cloak>
-			<v-navigation-drawer class="{{ config('app.sidebar_color') }}" {{ config( 'app.sidebar_theme') }} persistent :mini-variant.sync="mini"
-			 v-model="drawer" overflow>
-				<v-toolbar flat class="transparent">
-					<v-list class="pa-0">
-						<v-list-tile avatar tag="div" router to="perfil">
-							<v-list-tile-avatar>
-								<v-icon >account_circle</v-icon>
-								{{--  <v-icon {{ config( 'app.sidebar_icons') }}>account_circle</v-icon>  --}}
-							</v-list-tile-avatar>
-							<v-list-tile-content>
-								<v-list-tile-title>@{{ $store.state.auth_user.name }}</v-list-tile-title>
-							</v-list-tile-content>
-						</v-list-tile>
-					</v-list>
-				</v-toolbar>
-				<v-list class="pt-0" dense>
-					<v-divider></v-divider>
-					<v-list-tile v-for="item in menuItems" :key="item.title" router :to="item.link" v-show="item.show">
-						<v-list-tile-action>
-							<v-icon {{ config( 'app.sidebar_icons') }}>@{{ item.icon }}</v-icon>
-						</v-list-tile-action>
-						<v-list-tile-content>
-							<v-list-tile-title>@{{ item.title }}</v-list-tile-title>
-						</v-list-tile-content>
-					</v-list-tile>
-				</v-list>
-				<v-divider dark></v-divider>
-				<div v-if="!mini">
-					<v-subheader class="mt-3 white--text text--darken-1">
-						<v-icon {{ config( 'app.sidebar_icons') }} left>event</v-icon>&nbsp;&nbsp;AGENDA</v-subheader>
-					<v-switch :label="eventsLabel" dark v-model="myEvents" class="ml-4"></v-switch>
-					<div v-if="eventList.length >= 1" id="upcomingEvents">
-						<v-list-tile avatar v-for="update in eventList" :key="update.id" :class="{'error' : update.isDueDude }" @click.prevent.stop="updateEventClicked(update.ticket_id)">
-							<v-list-tile-action>
-								<div class="subheading">@{{ update.due_date | fullDateAndTime}}</div>
-							</v-list-tile-action>
-							<v-list-tile-content>
-								<v-list-tile-title>@{{ update.userName }}</v-list-tile-title>
-								<v-list-tile-sub-title>@{{ update.description.substring(0,45) }}</v-list-tile-sub-title>
-							</v-list-tile-content>
-						</v-list-tile>
-					</div>
-					<span class="white--text ml-3" v-else>
-						<span v-if="myEvents">No tenes eventos...</span>
-						<span v-else>No hay eventos!</span>
-					</span>
-				</div>
-			</v-navigation-drawer>
-			<v-toolbar fixed class="{{ config('app.main_color') }}" dark>
-				<div class="hidden-sm-and-down">
-					<v-toolbar-side-icon @click.prevent.stop="mini = !mini"></v-toolbar-side-icon>
-				</div>
-				<v-toolbar-title>
-					<router-link to="/" tag="span" style="cursor: pointer">
-						@if(config('app.logo') !== null)
-							<img height="50px" src="{{ config('app.logo') }}" alt="{{ config('app.name') }}"> 
-						@else 
-							{{ config('app.name') }} 
-						@endif
-					</router-link>
-				</v-toolbar-title>
-				<div style="margin: auto" v-show="loader">
-					<v-progress-circular size="40" indeterminate class="deep-orange--text"></v-progress-circular>
-				</div>
-				<v-btn @click="$store.state.openTicketForm = true" class="primary elevation-4" dark small absolute bottom right fab>
-					<v-icon>add</v-icon>
-				</v-btn>
-			</v-toolbar>
-			<main>
-				<v-container fluid>
-					<router-view></router-view>
-				</v-container>
-			</main>
-			<ticket-form :dialog="$store.state.openTicketForm"></ticket-form>
-			<notifications group="info" classes="vue-notification info" position="bottom right"></notifications>
+    <div id="vue-container">
+        @if(Auth::check())
+        <v-app id="spme" v-cloak>
+            <v-navigation-drawer
+            fixed
+            clipped
+            app
+            v-model="drawer"
+            >
+            <v-list dense>
+                <template v-for="(item, i) in items">
+                <v-layout
+                    row
+                    v-if="item.heading"
+                    align-center
+                    :key="i"
+                >
+                    <v-flex xs6>
+                    <v-subheader v-if="item.heading">
+                        @{{ item.heading }}
+                    </v-subheader>
+                    </v-flex>
+                    <v-flex xs6 class="text-xs-center">
+                    <a href="#!" class="body-2 black--text">EDIT</a>
+                    </v-flex>
+                </v-layout>
+                <v-list-group v-else-if="item.children" v-model="item.model" no-action>
+                    <v-list-tile slot="item" @click="">
+                    <v-list-tile-action>
+                        <v-icon>@{{ item.model ? item.icon : item['icon-alt'] }}</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                        <v-list-tile-title>
+                        @{{ item.text }}
+                        </v-list-tile-title>
+                    </v-list-tile-content>
+                    </v-list-tile>
+                    <v-list-tile
+                    v-for="(child, i) in item.children"
+                    :key="i"
+                    @click=""
+                    >
+                    <v-list-tile-action v-if="child.icon">
+                        <v-icon>@{{ child.icon }}</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                        <v-list-tile-title>
+                        @{{ child.text }}
+                        </v-list-tile-title>
+                    </v-list-tile-content>
+                    </v-list-tile>
+                </v-list-group>
+                <v-list-tile v-else @click="">
+                    <v-list-tile-action>
+                    <v-icon>@{{ item.icon }}</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                    <v-list-tile-title>
+                        @{{ item.text }}
+                    </v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+                </template>
+            </v-list>
+            </v-navigation-drawer>
+            <v-toolbar
+            color="blue darken-3"
+            dark
+            app
+            clipped-left
+            fixed
+            >
+            <v-toolbar-title :style="$vuetify.breakpoint.smAndUp ? 'width: 300px; min-width: 250px' : 'min-width: 72px'" class="ml-0 pl-3">
+                <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
+                <span class="hidden-xs-only">Google Contacts</span>
+            </v-toolbar-title>
+            <v-text-field
+                light
+                solo
+                prepend-icon="search"
+                placeholder="Search"
+                style="max-width: 500px; min-width: 128px"
+            ></v-text-field>
+            <div class="d-flex align-center" style="margin-left: auto">
+                <v-btn icon>
+                <v-icon>apps</v-icon>
+                </v-btn>
+                <v-btn icon>
+                <v-icon>notifications</v-icon>
+                </v-btn>
+            </div>
+            </v-toolbar>
+            <v-content>
+            <v-container fluid fill-height>
+                <v-layout justify-center align-center>
+                <v-tooltip right>
+                    <v-btn icon large :href="source" target="_blank" slot="activator">
+                    <v-icon large>code</v-icon>
+                    </v-btn>
+                    <span>Source</span>
+                </v-tooltip>
+                </v-layout>
+            </v-container>
+            </v-content>
+            <v-btn
+            fab
+            bottom
+            right
+            color="pink"
+            dark
+            fixed
+            @click.stop="dialog = !dialog"
+            >
+            <v-icon>add</v-icon>
+            </v-btn>
+            <v-dialog v-model="dialog" width="800px">
+            <v-card>
+                <v-card-title
+                class="grey lighten-4 py-4 title"
+                >
+                Create contact
+                </v-card-title>
+                <v-container grid-list-sm class="pa-4">
+                <v-layout row wrap>
+                    <v-flex xs12 align-center justify-space-between>
+                    <v-layout align-center>
+                        <v-avatar size="40px" class="mr-3">
+                        <img
+                            src="//ssl.gstatic.com/s2/oz/images/sge/grey_silhouette.png"
+                            alt=""
+                        >
+                        </v-avatar>
+                        <v-text-field
+                        placeholder="Name"
+                        ></v-text-field>
+                    </v-layout>
+                    </v-flex>
+                    <v-flex xs6>
+                    <v-text-field
+                        prepend-icon="business"
+                        placeholder="Company"
+                    ></v-text-field>
+                    </v-flex>
+                    <v-flex xs6>
+                    <v-text-field
+                        placeholder="Job title"
+                    ></v-text-field>
+                    </v-flex>
+                    <v-flex xs12>
+                    <v-text-field
+                        prepend-icon="mail"
+                        placeholder="Email"
+                    ></v-text-field>
+                    </v-flex>
+                    <v-flex xs12>
+                    <v-text-field
+                        type="tel"
+                        prepend-icon="phone"
+                        placeholder="(000) 000 - 0000"
+                        mask="phone"
+                    ></v-text-field>
+                    </v-flex>
+                    <v-flex xs12>
+                    <v-text-field
+                        prepend-icon="notes"
+                        placeholder="Notes"
+                    ></v-text-field>
+                    </v-flex>
+                </v-layout>
+                </v-container>
+                <v-card-actions>
+                <v-btn flat color="primary">More</v-btn>
+                <v-spacer></v-spacer>
+                <v-btn flat color="primary" @click="dialog = false">Cancel</v-btn>
+                <v-btn flat @click="dialog = false">Save</v-btn>
+                </v-card-actions>
+            </v-card>
+            </v-dialog>
+            <notifications group="info" classes="vue-notification info" position="bottom right"></notifications>
 			<notifications group="success" classes="vue-notification success" position="bottom right"></notifications>
 			<notifications group="warning" classes="vue-notification warn" position="bottom right"></notifications>
 			<notifications group="error" classes="vue-notification error" position="bottom right"></notifications>
-		</v-app>
-		@else
-		<v-app {{ config( 'app.theme') }} v-cloak>
-			<v-toolbar fixed class="{{ config('app.main_color') }}" dark>
-				<v-toolbar-title>
-					<router-link to="/" tag="span" style="cursor: pointer">
-						@if(config('app.logo') !== null)
-							<img height="50px" src="{{ config('app.logo') }}" alt="{{ config('app.name') }}"> 
-						@else 
-							{{ config('app.name') }} 
-						@endif
-					</router-link>
-					<v-btn class="primary elevation-4" dark absolute right>
-						<v-icon left>call</v-icon>&nbsp;&nbsp;+54 911 3236 3848&nbsp;&nbsp;&nbsp;
-						<v-icon left>email</v-icon>&nbsp;&nbsp;info@thormaweb.com
-					</v-btn>
-				</v-toolbar-title>
-			</v-toolbar>
-			<main id="main">
-				<v-container fluid>
-					<v-layout row wrap>
-						<v-flex xs10 offset-xs1 md6 offset-md3>
-							<v-card dark class="animated fadeInUp grey lighten-4">
-								<v-toolbar class="{{ config('app.main_color') }}" dark>
-									<v-toolbar-title>Ingresar al sistema</v-toolbar-title>
-								</v-toolbar>
-								<v-card-text>
-									@if($errors->any())
-									<h6 class="error--text">Los datos son incorrectos. Intente nuevamente.</h6>
-									@endif
-									<form method="post" action="/login">
-										{!! csrf_field() !!}
-										<v-layout row>
-											<v-flex md10 offset-md1>
-												<v-text-field type="email" name="email" label="Email" light></v-text-field>
-											</v-flex>
-										</v-layout>
-										<v-layout row>
-											<v-flex md10 offset-md1>
-												<v-text-field type="password" name="password" label="Contraseña" light></v-text-field>
-											</v-flex>
-										</v-layout>
-										<div class="text-xs-right">
-											<input type="hidden" name="remember" value="1">
-											<v-btn type="submit" primary dark>Ingresar</v-btn>
-										</div>
-									</form>
-									<span>
-										<a href="/password/email">Olvido su contraseña?</a>
-									</span>
-								</v-card-text>
-							</v-card>
-						</v-flex>
-					</v-layout>
-
-				</v-container>
-			</main>
-		</v-app>
-		@endif
-	</div>
-	<script>
-		window.App = new Object();
-    	window.App.internal_api = {
-        {{--  getUser: '{{url()->route('getUser')}}',
-        updatePassword: '{{url()->route('updatePassword')}}',
-        logout: '{{url()->route('logout')}}',
-        getTickets: '{{url()->route('getTickets')}}',
-        getUsers: '{{url()->route('getUsers')}}',
-        getProviders: '{{url()->route('getProviders')}}',
-        getBuildings: '{{url()->route('getBuildings')}}',
-        getStatuses: '{{url()->route('getStatuses')}}',
-        getSeverities: '{{url()->route('getSeverities')}}',
-        postTicket: '{{url()->route('postTicket')}}',
-        postTicketUpdate: '{{url()->route('postTicketUpdate')}}',
-        postContact: '{{url()->route('postContact')}}',
-        syncProviderToUnit: '{{url()->route('syncProviderToUnit')}}',
-        postBuilding: '{{url()->route('postBuilding')}}',
-        postUnit: '{{url()->route('postUnit')}}',
-        deleteBuilding: '{{url()->route('deleteBuilding')}}',
-        deleteUnit: '{{url()->route('deleteUnit')}}',  --}}
-    };
-	</script>
-	<script src="{{mix('/js/app.js')}}"></script>
-	<script async src="https://printjs-4de6.kxcdn.com/print.min.js"></script>
+        </v-app>
+        @else
+        <v-app v-cloak>
+            <v-dialog width="600px" :value='true' persistent=''>
+                <v-card hover='' style='background:white'>
+                    <v-card class="blue darken-1">
+                        <v-card-title class="white--text text-xs-center">
+                            Ingresar al sistema
+                        </v-card-title>
+                    </v-card>
+                <v-card>
+                <v-card-text class="pt-4">
+                    @if($errors->any())
+						<h4 class="error--text">Los datos son incorrectos. Intente nuevamente.</h4>
+					@endif
+					<form class="flex pb-2" method="post" action="/login">
+						{!! csrf_field() !!}
+						<v-layout row>
+							<v-flex md10 offset-md1>
+								<v-text-field type="email" name="email" label="Email" light></v-text-field>
+							</v-flex>
+						</v-layout>
+						<v-layout row>
+							<v-flex md10 offset-md1>
+								<v-text-field type="password" name="password" label="Contraseña" light></v-text-field>
+							</v-flex>
+						</v-layout>
+						<div class="text-xs-right">
+							<input type="hidden" name="remember" value="1">
+							<v-btn type="submit" primary dark>Ingresar</v-btn>
+						</div>
+					</form>
+					<span>
+						<a href="/password/email">Olvido su contraseña?</a>
+					</span>
+                </v-card-text>  
+            </v-dialog>
+        </v-app>
+        @endif
+    </div>
+    <script src="{{mix('/js/app.js')}}"></script>
 </body>
-
 </html>
