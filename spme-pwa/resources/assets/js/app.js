@@ -8,69 +8,31 @@ new Vue({
   store,
 
   router,
-
-  props: {
-    source: String
+  
+  data: {
+    loader: false,
+    dialog: false,
+    drawer: true,
+    mini: false,
+    right: null,
+    myEvents: true,
+    dueDateTime: new Date() // This will be replaced by setDueDateTime methods
   },
 
-  data: {
-    dialog: false,
-    drawer: null,
-    items: [
-      { icon: "contacts", text: "Contacts" },
-      { icon: "history", text: "Frequently contacted" },
-      { icon: "content_copy", text: "Duplicates" },
-      {
-        icon: "keyboard_arrow_up",
-        "icon-alt": "keyboard_arrow_down",
-        text: "Labels",
-        model: true,
-        children: [{ icon: "add", text: "Create label" }]
-      },
-      {
-        icon: "keyboard_arrow_up",
-        "icon-alt": "keyboard_arrow_down",
-        text: "More",
-        model: false,
-        children: [
-          { text: "Import" },
-          { text: "Export" },
-          { text: "Print" },
-          { text: "Undo changes" },
-          { text: "Other contacts" }
-        ]
-      },
-      { icon: "settings", text: "Settings" },
-      { icon: "chat_bubble", text: "Send feedback" },
-      { icon: "help", text: "Help" },
-      { icon: "phonelink", text: "App downloads" },
-      { icon: "keyboard", text: "Go to the old version" }
-    ]
+  computed: {
+    menuItems() {
+      return [
+        { title: "Panel Común", icon: "dashboard", link: "/", show: true },
+        { title: "Mis Tickets", icon: "star", link: "mis-tareas", show: true }
+        // {
+        //   title: "Configuración",
+        //   icon: "settings",
+        //   link: "configuracion",
+        //   show: this.$store.state.auth_user.is_admin ? true : false
+        // }
+      ];
+    }
   }
-
-  // data: {
-  //   loader: false,
-  //   drawer: true,
-  //   mini: false,
-  //   right: null,
-  //   myEvents: true,
-  //   dueDateTime: new Date() // This will be replaced by setDueDateTime methods
-  // },
-
-  // computed: {
-  //   menuItems() {
-  //     return [
-  //       { title: "Panel Común", icon: "dashboard", link: "/", show: true },
-  //       { title: "Mis Tickets", icon: "star", link: "mis-tickets", show: true },
-  //       {
-  //         title: "Edificios",
-  //         icon: "business",
-  //         link: "edificios",
-  //         show: this.$store.state.auth_user.is_admin ? true : false
-  //       }
-  //       // { title: 'Proveedores', icon: 'group', link:'proveedores' }
-  //     ];
-  //   },
 
   //   upcomingEvents() {
   //     let upcomingUpdates = [];
