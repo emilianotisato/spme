@@ -1,6 +1,7 @@
 require("./bootstrap");
 import router from "./routes";
 import store from "./store/store";
+require('./utilities/filters') // Load global filters
 
 new Vue({
   el: "#vue-container",

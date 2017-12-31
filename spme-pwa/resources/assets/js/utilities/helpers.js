@@ -1,20 +1,20 @@
 /**
  * Helpers for finding task state
  */
-export function isUrgent(task) {
-    return task.priority.level == 10
+export function isHighPriority(task) {
+    return task.priority.level >= 8;
 }
 
 export function isUnassigned(task) {
-    if(task.status.name == 'unassigned'){
-        return task.priority.level != 10;
+    if (task.assigned_user == null) {
+      return task.priority.level <= 7;
     }
     return false
 }
 
 export function isOpenTask(task) {
-    if(task.status.name != 'unassigned'){
-        return task.priority.level != 10;
+    if (task.assigned_user != null) {
+      return task.priority.level <= 7;
     }
     return false
 }

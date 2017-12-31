@@ -12,8 +12,8 @@ class PrioritiesTableSeeder extends Seeder
      */
     public function run()
     {
-        Priority::create(['name' => 'Baja', 'level' => 1]);
-        Priority::create(['name' => 'Media', 'level' => 5]);
-        Priority::create(['name' => 'Alta!', 'level' => 10]);
+        Priority::create(['label' => 'Baja', 'level' => 1]);
+        Priority::create(['label' => 'Media', 'level' => 5]);
+        Priority::create(['label' => 'Alta!', 'level' => 10]);
     }
 }

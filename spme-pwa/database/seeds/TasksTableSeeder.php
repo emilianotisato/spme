@@ -13,5 +13,10 @@ class TasksTableSeeder extends Seeder
     public function run()
     {
         factory(Task::class, 300)->create();
+
+        Task::inRandomOrder()->take(50)->get()->each(function ($task) {
+            $task->assigned_user = null;
+            $task->save();
+        });
     }
 }

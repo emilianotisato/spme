@@ -91,7 +91,7 @@
             </div>
             </v-toolbar>
             <v-content>
-            <v-container fluid fill-height>
+            <v-container fluid  v-if="initStore">
                 <router-view></router-view>
             </v-container>
             </v-content>

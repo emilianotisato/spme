@@ -17,7 +17,7 @@ class Priority extends Model
      * @var array
      */
     protected $fillable = [
-        'name', 'level'
+        'name', 'label', 'level'
     ];
 
     /**

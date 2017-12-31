@@ -12,7 +12,7 @@ export default new VueRouter({
         {
             path: '/',
             name: 'dashboard',
-            // component: require('./layouts/Master'),
+            component: require('./views/Dashboard'),
         }
     ]
 });

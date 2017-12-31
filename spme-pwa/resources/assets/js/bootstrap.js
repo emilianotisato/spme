@@ -32,7 +32,7 @@ Vue.use(Notifications);
 
 window.Vue = Vue;
 window.App.form = Form;
-window.App.moment = Moment;
+window.moment = Moment;
 
 // Axios Config
 window.App.axios = require("axios");

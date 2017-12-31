@@ -1,4 +1,4 @@
-import { isUrgent, isUnassigned, isOpenTask    } from '../utilities/helpers'
+import { isHighPriority, isUnassigned, isOpenTask    } from '../utilities/helpers'
 
 export default {
 
@@ -34,9 +34,9 @@ export default {
      * @param state
      * @returns {Array.<*>}
      */
-    urgentTasks(state){
+    highPriority(state) {
         const tasks = state.tasks.filter((task) => {
-            return isUrgent(task);
+            return isHighPriority(task);
         });
 
         return tasks;
