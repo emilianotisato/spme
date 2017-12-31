@@ -1,20 +1,20 @@
 /**
- * Helpers for finding ticket state
+ * Helpers for finding task state
  */
-export function isUrgent(ticket) {
-    return ticket.ticket_severity.level == 10
+export function isUrgent(task) {
+    return task.priority.level == 10
 }
 
-export function isUnassigned(ticket) {
-    if(ticket.ticket_status.name == 'unassigned'){
-        return ticket.ticket_severity.level != 10;
+export function isUnassigned(task) {
+    if(task.status.name == 'unassigned'){
+        return task.priority.level != 10;
     }
     return false
 }
 
-export function isOpenTicket(ticket) {
-    if(ticket.ticket_status.name != 'unassigned'){
-        return ticket.ticket_severity.level != 10;
+export function isOpenTask(task) {
+    if(task.status.name != 'unassigned'){
+        return task.priority.level != 10;
     }
     return false
 }

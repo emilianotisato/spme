@@ -10,12 +10,11 @@ class UserController extends Controller
 {
     public function getUser()
     {
-        // TODO: load roles ->load('roles')
-        return Auth::user();
+        return Auth::user()->load('roles.permissions');
     }
 
     public function getUsers()
     {
-        return User::all();
+        return User::workForce()->get()->load('roles.permissions');
     }
 }

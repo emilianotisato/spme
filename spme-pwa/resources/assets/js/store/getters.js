@@ -1,4 +1,4 @@
-import { isUrgent, isUnassigned, isOpenTicket    } from '../utilities/helpers'
+import { isUrgent, isUnassigned, isOpenTask    } from '../utilities/helpers'
 
 export default {
 
@@ -12,58 +12,58 @@ export default {
     },
 
     /**
-     * Get all tickets
+     * Get all tasks
      * @param state
      * @returns {Array}
      */
-    tickets(state) {
-        return state.tickets;
+    tasks(state) {
+        return state.tasks;
     },
 
     /**
-     * Fet ticket by id
+     * Fet task by id
      * @param state
      * @param getters
      */
-    ticketById: (state, getters) => (ticketId) => {
-        return state.tickets.find(ticket => ticket.id === ticketId);
+    taskById: (state, getters) => (taskId) => {
+        return state.tasks.find(task => task.id === taskId);
     },
 
     /**
-     * Urgent Tickets
+     * Urgent Tasks
      * @param state
      * @returns {Array.<*>}
      */
-    urgentTickets(state){
-        const tickets = state.tickets.filter((ticket) => {
-            return isUrgent(ticket);
+    urgentTasks(state){
+        const tasks = state.tasks.filter((task) => {
+            return isUrgent(task);
         });
 
-        return tickets;
+        return tasks;
     },
 
     /**
-     * Unassigned Tickets
+     * Unassigned Tasks
      * @returns {Array.<*>}
      */
-    unassignedTickets(state){
-        const tickets = state.tickets.filter((ticket) => {
-            return isUnassigned(ticket)
+    unassignedTasks(state){
+        const tasks = state.tasks.filter((task) => {
+            return isUnassigned(task)
         });
 
-        return tickets;
+        return tasks;
     },
 
     /**
-     * Open Tickets
+     * Open Tasks
      * @returns {Array.<*>}
      */
-    openTickets(state){
-        const tickets = state.tickets.filter((ticket) => {
-            return isOpenTicket(ticket)
+    openTasks(state){
+        const tasks = state.tasks.filter((task) => {
+            return isOpenTask(task)
         });
 
-        return tickets;
+        return tasks;
     },
 
     /**
@@ -85,28 +85,28 @@ export default {
     },
 
     /**
-     * Get all buildings
+     * Get all clients
      * @param state
      * @returns {Array}
      */
-    buildings(state) {
-        return state.buildings;
+    clients(state) {
+        return state.clients;
     },
 
     /**
-     * Fet building by id
+     * Fet client by id
      * @param state
      * @param getters
      */
-    buildingById: (state, getters) => (buildingId) => {
-        return state.buildings.find(building => building.id === buildingId);
+    clientById: (state, getters) => (clientId) => {
+        return state.clients.find(client => client.id === clientId);
     },
 
     statuses(state) {
         return state.statuses;
     },
 
-    severities(state) {
-        return state.severities;
+    priorities(state) {
+        return state.priorities;
     },
 }

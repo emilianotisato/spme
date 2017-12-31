@@ -36,7 +36,7 @@ class Task extends Model
      * The relations to eager load on every query.
      * @var array
      */
-    protected $with = ['project', 'updates', 'user', 'assigned', 'taskStatus', 'taskPriority'];
+    protected $with = ['project', 'updates', 'user', 'assigned', 'status', 'priority'];
 
     /**
      * The user who creat the task
@@ -69,7 +69,7 @@ class Task extends Model
      * The task status
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function taskStatus()
+    public function status()
     {
         return $this->belongsTo(Status::class);
     }
@@ -78,7 +78,7 @@ class Task extends Model
      * The task priority
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
-    public function taskPriority()
+    public function priority()
     {
         return $this->belongsTo(Priority::class);
     }

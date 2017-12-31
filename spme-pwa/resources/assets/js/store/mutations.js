@@ -4,65 +4,61 @@ export default {
         state.auth_user = auth_user;
     },
 
-    set_tickets(state, payload) {
-        payload.ticket ? state.tickets.push(payload.ticket) : state.tickets = payload.tickets;
+    set_tasks(state, payload) {
+        payload.task ? state.tasks.push(payload.task) : state.tasks = payload.tasks;
     },
 
-    update_tickets(state, updatedTicket) {
-        Object.assign(state.tickets.find(ticket => ticket.id === updatedTicket.id), updatedTicket)
+    update_tasks(state, updatedTask) {
+        Object.assign(state.tasks.find(task => task.id === updatedTask.id), updatedTask)
     },
 
-    set_buildings(state, buildings) {
-        state.buildings = buildings;
+    set_clients(state, clients) {
+        state.clients = clients;
     },
 
-    update_buildings(state, payload) {
+    update_clients(state, payload) {
 
         if(payload.action == 'create') {
 
-            state.buildings.push(payload.object)
+            state.clients.push(payload.object)
         }
 
         if(payload.action == 'update') {
 
-            Object.assign(state.buildings.find(building => building.id === payload.object.id), payload.object)
+            Object.assign(state.clients.find(client => client.id === payload.object.id), payload.object)
         }
     },
 
-    update_units(state, payload) {
+    update_projects(state, payload) {
 
-        let building = state.buildings.find(building => building.id === payload.object.building_id)
+        let client = state.clients.find(client => client.id === payload.object.client_id)
 
         if(payload.action == 'create') {
 
-            if(! building.hasOwnProperty('units')) { // Create units array if the building has just created in the front
-                building.units = []
+            if(! client.hasOwnProperty('projects')) { // Create projects array if the client has just created in the front
+                client.projects = []
             }
 
-            building.units.push(payload.object)
+            client.projects.push(payload.object)
         }
 
         if(payload.action == 'update') {
-            Object.assign(building.units.find(unit => unit.id === payload.object.id), payload.object)
+            Object.assign(client.projects.find(project => project.id === payload.object.id), payload.object)
         }
 
-        Object.assign(state.buildings.find(building => building.id === payload.object.building_id), building)
+        Object.assign(state.clients.find(client => client.id === payload.object.client_id), client)
     },
 
     set_users(state, users) {
         state.users = users;
     },
 
-    set_providers(state, providers) {
-        state.providers = providers;
-    },
-
     set_statuses(state, statuses) {
         state.statuses = statuses;
     },
 
-    set_severities(state, severities) {
-        state.severities = severities;
+    set_priorities(state, priorities) {
+        state.priorities = priorities;
     }
 
 

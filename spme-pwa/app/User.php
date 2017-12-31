@@ -58,6 +58,17 @@ class User extends Authenticatable
     }
 
     /**
+     * Scope a query to only include managers, staff and freelancers.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeWorkForce($query)
+    {
+        return $query->where('client_id', '=', null);
+    }
+
+    /**
      * Send the password reset notification.
      *
      * @param  string  $token
