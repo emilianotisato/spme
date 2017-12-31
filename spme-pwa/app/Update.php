@@ -47,16 +47,14 @@ class Update extends Model
     }
 
     /**
-     * The "booting" method of the model.
+     * Apply the scope all Eloquent query builder.
      *
+     * @param  \Illuminate\Database\Eloquent\Builder  $builder
+     * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return void
      */
-    protected static function boot()
+    public function apply(Builder $builder, Model $model)
     {
-        parent::boot();
-
-        static::addGlobalScope('ordered', function (Builder $builder) {
-            $builder->orderBy('created_at', 'DESC');
-        });
+        $builder->orderBy('created_at', 'DESC');
     }
 }

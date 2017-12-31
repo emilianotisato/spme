@@ -10,13 +10,12 @@ Vue.use(Vuex);
 export default new Vuex.Store({
     state: {
         auth_user: {},
-        tickets: [],
+        tasks: [],
         users: [],
-        providers: [],
-        buildings: [],
+        clients: [],
         statuses: [],
-        severities: [],
-        openTicketForm: false
+        priorities: [],
+        openTaskForm: false
     },
     getters,
     mutations,

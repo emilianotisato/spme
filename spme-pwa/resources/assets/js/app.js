@@ -8,9 +8,10 @@ new Vue({
   store,
 
   router,
-  
+
   data: {
-    loader: false,
+    // loader: false,
+    initStore: false,
     dialog: false,
     drawer: true,
     mini: false,
@@ -32,6 +33,55 @@ new Vue({
         // }
       ];
     }
+  },
+
+  mounted() {
+    this.initStoreState();
+  },
+
+  methods: {
+
+    initStoreState() {
+      let authUser, tasks, users, clients, statuses, priorities = false;
+
+      this.$store.dispatch("set_auth_user").then(() => {
+        authUser = true;
+      });
+
+      this.$store.dispatch("set_tasks").then(() => {
+        tasks = true;
+      });
+
+      this.$store.dispatch("set_users").then(() => {
+        users = true;
+      });
+
+      this.$store.dispatch("set_clients").then(() => {
+        clients = true;
+      });
+
+      this.$store.dispatch("set_statuses").then(() => {
+        statuses = true;
+      });
+
+      this.$store.dispatch("set_priorities").then(() => {
+        priorities = true;
+      });
+
+
+      let checkLoaded = () => {
+        setTimeout(() => {
+          if ([authUser, tasks, users, clients, statuses, priorities].every(el => el === true )) {
+            this.initStore = true;
+          } else {
+            checkLoaded();
+          }
+        }, 50);
+      };
+
+      checkLoaded();
+    }
+
   }
 
   //   upcomingEvents() {

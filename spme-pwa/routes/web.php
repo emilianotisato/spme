@@ -17,23 +17,21 @@ Route::get('resetpass', 'AppController@resetpass');
 Route::group([
     'middleware' => 'auth'
 ], function () {
-    Route::get('get-auth-user', 'InternalApiController@getUser')->name('getUser');
+    Route::get('get-auth-user', 'Api\UserController@getUser')->name('getUser');
     Route::post('update-user-password', 'Auth\UpdatePasswordController@update')->name('updatePassword');
-    Route::get('get-tasks/{id}', 'InternalApiController@getTaskById');
-    Route::get('get-tasks', 'InternalApiController@getTasks')->name('getTasks');
-    Route::get('get-users', 'InternalApiController@getUsers')->name('getUsers');
-    Route::get('get-clients', 'InternalApiController@getClients')->name('getClients');
-    Route::get('get-statuses', 'InternalApiController@getStatuses')->name('getStatuses');
-    Route::get('get-severities', 'InternalApiController@getSeverities')->name('getSeverities');
-    Route::post('post-task', 'InternalApiController@postTask')->name('postTask');
-    Route::post('post-task-update', 'InternalApiController@postTaskUpdate')->name('postTaskUpdate');
-    Route::post('post-task/{id}', 'InternalApiController@editTask');
-    Route::post('post-contact', 'InternalApiController@postContact')->name('postContact');
-    Route::post('sync-provider-contact', 'InternalApiController@syncProviderToProject')->name('syncProviderToProject');
-    Route::post('post-client', 'InternalApiController@postClient')->name('postClient');
-    Route::post('post-project', 'InternalApiController@postProject')->name('postProject');
-    Route::post('delete-client', 'InternalApiController@deleteClient')->name('deleteClient');
-    Route::post('delete-project', 'InternalApiController@deleteProject')->name('deleteProject');
+    Route::get('get-users', 'Api\UserController@getUsers')->name('getUsers');
+    Route::get('get-tasks/{id}', 'Api\TaskController@getTaskById');
+    Route::get('get-tasks', 'Api\TaskController@getTasks')->name('getTasks');
+    Route::post('post-task', 'Api\TaskController@postTask')->name('postTask');
+    Route::post('post-task-update', 'Api\TaskController@postTaskUpdate')->name('postTaskUpdate');
+    Route::post('post-task/{id}', 'Api\TaskController@editTask');
+    Route::get('get-clients', 'Api\ClientController@getClients')->name('getClients');
+    Route::post('post-client', 'Api\ClientController@postClient')->name('postClient');
+    Route::post('delete-client', 'Api\ClientController@deleteClient')->name('deleteClient');
+    Route::post('post-project', 'Api\ProjectController@postProject')->name('postProject');
+    Route::post('delete-project', 'Api\ProjectController@deleteProject')->name('deleteProject');
+    Route::get('get-statuses', 'Api\SystemController@getStatuses')->name('getStatuses');
+    Route::get('get-priorities', 'Api\SystemController@getPriorities')->name('getPriorities');
 });
 
 // Application routes (Laravel delegates to Vue)

@@ -2,7 +2,10 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Scope;
 
 class Task extends Model
 {
@@ -33,7 +36,7 @@ class Task extends Model
      * The relations to eager load on every query.
      * @var array
      */
-    protected $with = ['project', 'contacts', 'updates', 'user', 'assigned', 'taskStatus', 'taskPriority'];
+    protected $with = ['project', 'updates', 'user', 'assigned', 'taskStatus', 'taskPriority'];
 
     /**
      * The user who creat the task
@@ -86,19 +89,16 @@ class Task extends Model
     }
 
     /**
-     * The "booting" method of the model.
+     * Apply the scope all Eloquent query builder.
      *
+     * @param  \Illuminate\Database\Eloquent\Builder  $builder
+     * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return void
      */
-    protected static function boot()
+    public function apply(Builder $builder, Model $model)
     {
-        parent::boot();
-
-        // Get only non closed tasks on normal queries
-        static::addGlobalScope('closed', function (Builder $builder) {
-            $builder->orderBy('created_at', 'DESC')
+        $builder->orderBy('created_at', 'DESC')
                 ->where('closed', null);
-        });
     }
 
     /**
@@ -116,6 +116,6 @@ class Task extends Model
      */
     public function getProjectFullNameAttribute()
     {
-        return $this->project->building->name . ' (' . $this->project->name . ')';
+        return $this->project->client->name . ' (' . $this->project->name . ')';
     }
 }

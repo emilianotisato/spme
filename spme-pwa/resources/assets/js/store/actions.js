@@ -1,9 +1,7 @@
-// import localforage from 'localforage';
-
 export default {
 
     set_auth_user(context){
-        return axios.get(window.App.internal_api.getUser)
+        return App.axios.get(App.api.getUser)
             .then(function (response) {
 
                 context.commit('set_auth_user', response.data); // Commit to store state
@@ -12,18 +10,18 @@ export default {
             }).catch(error => console.log(error));
     },
 
-    set_tickets(context){
-        return axios.get(window.App.internal_api.getTickets)
+    set_tasks(context){
+        return App.axios.get(App.api.getTasks)
             .then(function (response) {
 
-                context.commit('set_tickets', {ticket: null, tickets: response.data});
+                context.commit('set_tasks', {task: null, tasks: response.data});
 
                 return true;
             }).catch(error => console.log(error));
     },
 
     set_users(context){
-        return axios.get(window.App.internal_api.getUsers)
+        return App.axios.get(App.api.getUsers)
             .then(function (response) {
 
                 context.commit('set_users', response.data);
@@ -32,28 +30,18 @@ export default {
             }).catch(error => console.log(error));
     },
 
-    set_providers(context){
-        return axios.get(window.App.internal_api.getProviders)
+    set_clients(context){
+        return App.axios.get(App.api.getClients)
             .then(function (response) {
 
-                context.commit('set_providers', response.data);
-
-                return true;
-            }).catch(error => console.log(error));
-    },
-
-    set_buildings(context){
-        return axios.get(window.App.internal_api.getBuildings)
-            .then(function (response) {
-
-                context.commit('set_buildings', response.data);
+                context.commit('set_clients', response.data);
 
                 return true;
             }).catch(error => console.log(error));
     },
 
     set_statuses(context){
-        return axios.get(window.App.internal_api.getStatuses)
+        return App.axios.get(App.api.getStatuses)
             .then(function (response) {
 
                 context.commit('set_statuses', response.data);
@@ -62,11 +50,11 @@ export default {
             }).catch(error => console.log(error));
     },
 
-    set_severities(context){
-        return axios.get(window.App.internal_api.getSeverities)
+    set_priorities(context){
+        return App.axios.get(App.api.getPriorities)
             .then(function (response) {
 
-                context.commit('set_severities', response.data);
+                context.commit('set_priorities', response.data);
 
                 return true;
             }).catch(error => console.log(error));
