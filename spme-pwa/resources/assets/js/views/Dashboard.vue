@@ -1,8 +1,8 @@
 <template>
     <div class="animated fadeIn">
         <v-layout row wrap>
-            <v-flex md4 xs12>
-                <v-card hover dark class="error" @click.prevent="activeList = 'error'">
+            <v-flex md4 xs12 class="px-1">
+                <v-card hover dark class="error" @click.native="activeList = 'error'">
                     <v-card-text>
                         <span class="title" :class="{'activeListSelect' : activeList == 'error'}">
                             Alta Prioridad
@@ -16,8 +16,8 @@
                     </v-card-text>
                 </v-card>
             </v-flex>
-            <v-flex md4 xs12>
-                <v-card hover dark class="warning" @click.prevent="activeList = 'warning'">
+            <v-flex md4 xs12 class="px-1">
+                <v-card hover dark class="warning" @click.native="activeList = 'warning'">
                     <v-card-text>
                         <span class="title" :class="{'activeListSelect' : activeList == 'warning'}">
                             Sin Asignar
@@ -31,11 +31,11 @@
                     </v-card-text>
                 </v-card>
             </v-flex>
-            <v-flex md4 xs12>
-                <v-card hover dark class="success" @click.prevent="activeList = 'success'">
+            <v-flex md4 xs12 class="px-1">
+                <v-card hover dark class="success" @click.native="activeList = 'success'">
                     <v-card-text>
                         <span class="title" :class="{'activeListSelect' : activeList == 'success'}">
-                            Abiertos
+                            Estables
                         </span>
 
                         <span class="right">
@@ -48,7 +48,6 @@
             </v-flex>
 
         </v-layout>
-        <a @click.prevent.stop="print()"><v-icon left>print</v-icon> Imprimir</a>
 
         <v-card>
             <v-card-title>
@@ -75,7 +74,7 @@
             >
                 <template slot="items" scope="props">
                     <td class="text-xs-left" @click.stop="showTaskTab(props.item)">{{ props.item.id }}</td>
-                    <td class="text-xs-left" @click.stop="showTaskTab(props.item)">{{ props.item.clientFullName }}</td>
+                    <td class="text-xs-left" @click.stop="showTaskTab(props.item)">{{ props.item.projectFullName }}</td>
                     <td class="text-xs-left" @click.stop="showTaskTab(props.item)">{{ props.item.subject }}</td>
                     <td class="text-xs-left" @click.stop="showTaskTab(props.item)">{{ props.item.created_at | justDate }}</td>
                     <td class="text-xs-left" @click.stop="showTaskTab(props.item)">{{ props.item.priority.label }}</td>
@@ -83,7 +82,6 @@
                     <td class="text-xs-left" @click.stop="showTaskTab(props.item)">
                         <span v-if="props.item.assigned">{{ props.item.assigned.name }}</span>
                         <span v-else>Sin Asignar</span></td>
-                    <td class="text-xs-left" @click.stop="showTaskTab(props.item)">{{ props.item.Proveedores }}</td>
                 </template>
                 <template slot="pageText" scope="{ pageStart, pageStop }">
                     Desde {{ pageStart }} hasta {{ pageStop }}
@@ -109,13 +107,12 @@
                 rowsPerPage: [10, 20, 30, { text: "Todos", value: -1 }],
                 headers: [
                     { align: 'left', text: 'Task', value: 'id' },
-                    { align: 'left', text: 'Cliente/Proyecto', value: 'clientFullName' },
+                    { align: 'left', text: 'Cliente/Proyecto', value: 'projectFullName' },
                     { align: 'left', text: 'Asunto', value: 'subject' },
                     { align: 'left', text: 'Abierto el', value: 'created_at' },
                     { align: 'left', text: 'Urgencia', value: 'priority.label' },
                     { align: 'left', text: 'Estado', value: 'status.label' },
                     { align: 'left', text: 'Asignado a', value: 'assigned.name' },
-                    { align: 'left', text: 'Proveedores', value: 'Proveedores' },
                 ],
                 items: [],
                 selectedTask: {status:{label:''},priority:{label:''},assigned:{name:''}},
@@ -174,9 +171,6 @@
             closeTaskTab(){
                 this.openTask = false;
                 this.selectedTask = {};
-            },
-            print() {
-                printJS('forPrint', 'html')
             }
         }
 
