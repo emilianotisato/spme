@@ -72,7 +72,7 @@
                     :rows-per-page-items="rowsPerPage"
                     :search="search"
             >
-                <template slot="items" scope="props">
+                <template slot="items" slot-scope="props">
                     <td class="text-xs-left" @click.stop="showTaskTab(props.item)">{{ props.item.id }}</td>
                     <td class="text-xs-left" @click.stop="showTaskTab(props.item)">{{ props.item.projectFullName }}</td>
                     <td class="text-xs-left" @click.stop="showTaskTab(props.item)">{{ props.item.subject }}</td>
@@ -83,7 +83,7 @@
                         <span v-if="props.item.assigned">{{ props.item.assigned.name }}</span>
                         <span v-else>Sin Asignar</span></td>
                 </template>
-                <template slot="pageText" scope="{ pageStart, pageStop }">
+                <template slot="pageText" slot-scope="{ pageStart, pageStop }">
                     Desde {{ pageStart }} hasta {{ pageStop }}
                 </template>
             </v-data-table>
@@ -93,7 +93,7 @@
 </template>
 
 <script>
-    import Task from './Task';
+    import Task from '../components/Task';
 
     export default {
         components: { Task },
@@ -177,7 +177,7 @@
     }
 </script>
 
-<style scoped="">
+<style scoped>
     td {
         cursor: pointer;
     }

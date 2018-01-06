@@ -50,7 +50,7 @@
                     </v-list-tile-content>
                     </v-list-tile>
                 </v-list-group>
-                <v-list-tile v-else router :to="item.link"> 
+                <v-list-tile v-else router :to="item.link">
                     <v-list-tile-action>
                     <v-icon>@{{ item.icon }}</v-icon>
                     </v-list-tile-action>
@@ -77,8 +77,9 @@
             <v-text-field
                 light
                 solo
+                :disabled="!initStore"
                 prepend-icon="search"
-                placeholder="Search"
+                placeholder="Buscar..."
                 style="max-width: 500px; min-width: 128px"
             ></v-text-field>
             <div class="d-flex align-center" style="margin-left: auto">
@@ -94,6 +95,11 @@
             <v-container fluid  v-if="initStore">
                 <router-view></router-view>
             </v-container>
+            <v-container v-else fluid fill-height>
+                <v-layout justify-center align-center>
+                    <v-progress-circular indeterminate :size="60" color="primary"></v-progress-circular>
+                </v-layout>
+            </v-container>
             </v-content>
             <v-btn
             fab
@@ -102,6 +108,7 @@
             color="pink"
             dark
             fixed
+            :disabled="!initStore"
             @click.stop="dialog = !dialog"
             >
             <v-icon>add</v-icon>
@@ -208,7 +215,7 @@
 					<span>
 						<a href="/password/email">Olvido su contraseña?</a>
 					</span>
-                </v-card-text>  
+                </v-card-text>
             </v-dialog>
         </v-app>
         @endif
