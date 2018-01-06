@@ -83,6 +83,11 @@ class Task extends Model
         return $this->belongsTo(Priority::class);
     }
 
+    /**
+     * The updates for this task
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function updates()
     {
         return $this->hasMany(Update::class);

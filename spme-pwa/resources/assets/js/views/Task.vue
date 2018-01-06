@@ -121,7 +121,7 @@
                         </transition>
                     </v-flex>
                     <transition enter-active-class="animated fade">
-                        <v-flex md3 xs12 class="mt-2 pb-3 pr-3" v-if="!editMode && !showCreateContactForm && !showAddProvider">
+                        <!-- <v-flex md3 xs12 class="mt-2 pb-3 pr-3" v-if="!editMode && !showCreateContactForm && !showAddProvider">
                             <v-expansion-panel>
                                 <v-expansion-panel-content v-for="(contact, i) in task.client.contacts" :key="i" v-bind:value="i === 0">
                                     <div slot="header">
@@ -143,16 +143,16 @@
                                     </v-card-actions>
                                 </v-card>
                             </v-expansion-panel>
-                        </v-flex>
+                        </v-flex> -->
                     </transition>
                     <transition enter-active-class="animated flipInY">
-                        <v-flex md3 xs12 class="mt-2 pb-3 pr-3" v-if="showCreateContactForm">
+                        <!-- <v-flex md3 xs12 class="mt-2 pb-3 pr-3" v-if="showCreateContactForm">
                             <contact-form
                                     @contactSuccessfullyAdded="pushNewContact"
                                     @closeContact="showCreateContactForm = false"
                                     :clientId="task.client_id"
                             ></contact-form>
-                        </v-flex>
+                        </v-flex> -->
                     </transition>
                 </v-layout>
                 <v-divider></v-divider>
@@ -290,7 +290,7 @@
             setComponent(task) {
                 this.task = task // Set task
 
-                this.form = new Form(task) // Set form
+                this.form = new App.form(task) // Set form
 
                 if(isHighPriority(task)) { // Set activeList
                     this.activeList = 'error'
@@ -333,9 +333,9 @@
                     });
             },
 
-            pushNewContact(contact) {
-                this.task.client.contacts.push(contact)
-            }
+            // pushNewContact(contact) {
+            //     this.task.client.contacts.push(contact)
+            // }
         }
     }
 </script>
