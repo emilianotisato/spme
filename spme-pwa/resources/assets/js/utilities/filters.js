@@ -9,7 +9,7 @@ Vue.filter('justDate', (date) => {
  * Format date with time
  */
 Vue.filter('fullDateAndTime', (date) => {
-    return moment(date).format('DD MMM h:mm')
+    return moment(date).format('DD MMM h:mm A')
 });
 
 /**

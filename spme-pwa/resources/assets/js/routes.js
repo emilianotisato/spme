@@ -13,6 +13,11 @@ export default new VueRouter({
             path: '/',
             name: 'dashboard',
             component: require('./views/Dashboard'),
+        },
+        {
+            path: '/tarea/:id',
+            name: 'task',
+            component: require('./views/Task'),
         }
     ]
 });

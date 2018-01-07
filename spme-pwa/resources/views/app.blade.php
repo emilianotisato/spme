@@ -105,7 +105,7 @@
             fab
             bottom
             right
-            color="pink"
+            color="deep-orange accent-4"
             dark
             fixed
             :disabled="!initStore"

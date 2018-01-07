@@ -3,20 +3,20 @@
  */
 window.App = {}
 window.App.api = {
-  getUser: "get-auth-user",
-  updatePassword: "update-user-password",
-  logout: "logout",
-  getTasks: "get-tasks",
-  getUsers: "get-users",
-  getClients: "get-clients",
-  getStatuses: "get-statuses",
-  getPriorities: "get-priorities",
-  postTask: "post-task",
-  postTaskUpdate: "post-task-update",
-  postClient: "post-client",
-  postProject: "post-project",
-  deleteClient: "delete-client",
-  deleteProject: "delete-project"
+  getUser: "/get-auth-user",
+  updatePassword: "/update-user-password",
+  logout: "/logout",
+  getTasks: "/get-tasks",
+  getUsers: "/get-users",
+  getClients: "/get-clients",
+  getStatuses: "/get-statuses",
+  getPriorities: "/get-priorities",
+  postTask: "/post-task",
+  postTaskUpdate: "/post-task-update",
+  postClient: "/post-client",
+  postProject: "/post-project",
+  deleteClient: "/delete-client",
+  deleteProject: "/delete-project"
 };
 
 import Vue from "vue";

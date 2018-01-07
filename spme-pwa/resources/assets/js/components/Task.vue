@@ -1,16 +1,16 @@
 <template>
-    <v-layout row justify-center>
+    <v-layout row justify-center v-if="task != null">
         <v-dialog v-model="dialog" fullscreen transition="dialog-bottom-transition" :overlay=false>
             <v-card>
                 <v-toolbar dark :class="activeList">
                     <v-btn icon @click.stop="closeTab" dark>
                         <v-icon>close</v-icon>
                     </v-btn>
-                    <v-toolbar-title>Task {{ task.id }} | {{ task.subject }}</v-toolbar-title>
+                    <v-toolbar-title>Task {{ task.id }} <span class="hidden-sm-and-down">| {{ task.subject }} <v-icon dark>updated</v-icon>{{ task.updated_at | fullDateAndTime }}</span></v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
                         <v-btn dark flat @click.stop="showCloseTaskForm = !showCloseTaskForm"><v-icon dark left>done_all</v-icon> <span class="hidden-sm-and-down">Marcar como Finalizado</span></v-btn>
-                        <!-- <v-btn dark flat @click.stop="editMode = !editMode"><v-icon dark left>edit</v-icon> <span class="hidden-sm-and-down">Editar</span></v-btn> -->
+                        <v-btn dark flat @click.stop="editMode = !editMode"><v-icon dark left>edit</v-icon> <span class="hidden-sm-and-down">Editar</span></v-btn>
                     </v-toolbar-items>
                 </v-toolbar>
                 <v-layout row wrap>
@@ -51,24 +51,7 @@
         },
 
         created() {
-            let task = this.$store.getters.taskById(this.taskId) // Check if task is already loaded in the store
-            if(task != undefined) {
-                this.setComponent(task)
-            } else { // Else go ask the API for the task
-                axios.get(window.App.api.getTasks + '/' + this.taskId)
-                    .then((response) => {
-                        this.setComponent(response.data)
-                    }).catch((error) => {
-                    this.$notify({
-                        group: 'error',
-                        title: 'Tarea no encontrado!',
-                        text: 'La tarea no existe o está cerrada',
-                        duration: 40000
-                    });
-                        console.log(error)
-                    }
-                );
-            }
+            this.setTask()
 
         },
 
@@ -76,17 +59,31 @@
             nToBr(text) {
                 return text.replace(/\n/g, "<br />")
             },
-            setComponent(task) {
-                this.task = task // Set task
 
-                this.form = new App.form(task) // Set form
+            setTask(){
+                let task = this.$store.getters.taskById(this.taskId) // Check if task is already loaded in the store
 
-                if(isHighPriority(task)) { // Set activeList
-                    this.activeList = 'error'
-                } else if(isUnassigned(task)) {
-                    this.activeList = 'warning'
-                }
+                let checkLoaded = () => {
+                    setTimeout(() => {
+                    if (task != undefined) {
+                        this.task = task // Set task
+
+                        this.form = new App.form(task) // Set form
+
+                        if(isHighPriority(task)) { // Set activeList
+                            this.activeList = 'error'
+                        } else if(isUnassigned(task)) {
+                            this.activeList = 'warning'
+                        }
+                    } else {
+                        checkLoaded();
+                    }
+                    }, 50);
+                };
+
+                checkLoaded();
             },
+
             closeTab(){
                 this.$emit('closeTab')
             }
