@@ -15,6 +15,12 @@ export default new VueRouter({
             component: require('./views/Dashboard'),
         },
         {
+            path: '/mis-tareas',
+            name: 'myTasks',
+            component: require('./views/Dashboard'),
+            props: { myTasks: true }
+        },
+        {
             path: '/tarea/:id',
             name: 'task',
             component: require('./views/Task'),

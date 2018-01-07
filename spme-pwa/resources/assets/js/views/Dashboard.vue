@@ -16,7 +16,7 @@
                     </v-card-text>
                 </v-card>
             </v-flex>
-            <v-flex md4 xs12 class="px-1">
+            <v-flex md4 xs12 class="px-1" v-show="!myTasks">
                 <v-card hover dark class="warning" @click.native="activeList = 'warning'">
                     <v-card-text>
                         <span class="title" :class="{'activeListSelect' : activeList == 'warning'}">
@@ -98,6 +98,13 @@
     export default {
         components: { Task },
 
+        props: {
+            myTasks: {
+                type: Boolean,
+                default: false
+            }
+        },
+
         data() {
             return {
                 activeList: 'success',
@@ -122,19 +129,35 @@
 
         computed: {
             highPriority() {
-                const highPriority = this.$store.getters.highPriority;
+                let highPriority = this.$store.getters.highPriority;
+
+                if(this.myTasks) {
+                    highPriority = highPriority.filter((task) => {
+                        return task.assigned_user == this.$store.state.auth_user.id
+                    });
+                }
+
                 highPriority.length >= 1 ? this.activeList = 'error' : 'warning';
                 return highPriority;
             },
             unassignedTasks(){
-                const unassignedTasks = this.$store.getters.unassignedTasks;
+                let unassignedTasks = this.$store.getters.unassignedTasks;
+
                 if(this.highPriority < 1){
                     unassignedTasks.length >= 1 ? this.activeList = 'warning' : 'success';
                 }
                 return unassignedTasks;
             },
             openTasks(){
-                return this.$store.getters.openTasks;
+                let openTasks = this.$store.getters.openTasks;
+
+                if(this.myTasks) {
+                    openTasks = openTasks.filter((task) => {
+                        return task.assigned_user == this.$store.state.auth_user.id
+                    });
+                }
+
+                return openTasks;
             },
             selectedList(){
                 switch(this.activeList) {
@@ -168,6 +191,7 @@
                 this.selectedTask = task;
                 this.openTask = true;
             },
+
             closeTaskTab(){
                 this.openTask = false;
                 this.selectedTask = {};

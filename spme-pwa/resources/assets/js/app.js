@@ -11,7 +11,6 @@ new Vue({
   router,
 
   data: {
-    // loader: false,
     initStore: false,
     dialog: false,
     drawer: true,
@@ -25,7 +24,7 @@ new Vue({
     menuItems() {
       return [
         { title: "Panel Común", icon: "dashboard", link: "/", show: true },
-        { title: "Mis Tickets", icon: "star", link: "mis-tareas", show: true }
+        { title: "Mis Tareas", icon: "star", link: "mis-tareas", show: true }
         // {
         //   title: "Configuración",
         //   icon: "settings",

@@ -33,6 +33,7 @@ Vue.use(Notifications);
 window.Vue = Vue;
 window.App.form = Form;
 window.moment = Moment;
+moment.locale('es')
 
 // Axios Config
 window.App.axios = require("axios");
