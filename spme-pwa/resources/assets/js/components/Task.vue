@@ -31,10 +31,13 @@
                             >
                             <v-btn dark>
                                 <span>Archivos</span>
-                                <v-icon>attach_file</v-icon>
+                                <v-icon>note_add</v-icon>
                             </v-btn>
-                            <v-btn dark small>
-                                <v-icon dark>add</v-icon>
+                            <v-btn dark>
+                                 <v-badge left>
+                                <span slot="badge">6</span>
+                                <v-icon>folder_open</v-icon>
+                                 </v-badge>
                             </v-btn>
                             </v-bottom-nav>
                         </v-card>

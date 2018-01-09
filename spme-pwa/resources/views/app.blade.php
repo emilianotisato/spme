@@ -7,7 +7,8 @@
     <title>{{ config('app.name') }}</title>
 
 	<link href="{{ mix('/css/app.css') }}" rel="stylesheet">
-	<link href="{{ asset('css/vuetify.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/vuetify.min.css') }}" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/img/favicon.png">
 
 	<meta name="csrf-token" content="{{ csrf_token() }}">
 </head>
