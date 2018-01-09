@@ -1,12 +1,12 @@
 <template>
     <v-layout row justify-center v-if="task != null">
-        <v-dialog v-model="dialog" fullscreen transition="dialog-bottom-transition" :overlay=false>
+        <v-dialog v-model="dialog" fullscreen transition="dialog-bottom-transition" :overlay="false">
             <v-card>
                 <v-toolbar dark :class="activeList">
                     <v-btn icon @click.stop="closeTab" dark>
                         <v-icon>close</v-icon>
                     </v-btn>
-                    <v-toolbar-title>Task {{ task.id }} <span class="hidden-sm-and-down">| {{ task.subject }} <v-icon dark>updated</v-icon>{{ task.updated_at | fullDateAndTime }}</span></v-toolbar-title>
+                    <v-toolbar-title>Task {{ task.id }} <span class="hidden-sm-and-down">| {{ task.subject }}</span></v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
                         <v-btn dark flat @click.stop="showCloseTaskForm = !showCloseTaskForm"><v-icon dark left>done_all</v-icon> <span class="hidden-sm-and-down">Marcar como Finalizado</span></v-btn>
@@ -14,18 +14,68 @@
                     </v-toolbar-items>
                 </v-toolbar>
                 <v-layout row wrap>
-                    Parte superior
+                    <v-flex md4 xs12 class="px-1">
+                        <v-card height="400px">
+                            <v-card-text>
+                                <editable-text-field
+                                name="subject"
+                                label="Nombre"
+                                :value="task.subject"
+                                ></editable-text-field>
+                            </v-card-text>
+                            <v-bottom-nav
+                            absolute
+                            :value="true"
+                            color="grey lighten-1"
+                            style="justify-content: left;"
+                            >
+                            <v-btn dark>
+                                <span>Archivos</span>
+                                <v-icon>attach_file</v-icon>
+                            </v-btn>
+                            <v-btn dark small>
+                                <v-icon dark>add</v-icon>
+                            </v-btn>
+                            </v-bottom-nav>
+                        </v-card>
+                    </v-flex>
+                    <v-flex md4 xs12 class="px-1">
+                        <v-card height="400px">
+                            <v-bottom-nav
+                            absolute
+                            :value="true"
+                            color="light-green darken-2"
+                            style="justify-content: left;"
+                            >
+                            <div class="lastUpdate">
+                                <v-icon dark left>updated</v-icon> {{ task.updated_at | fullDateAndTime }}
+                            </div>
+                            </v-bottom-nav>
+                        </v-card>
+                    </v-flex>
+                    <v-flex md4 xs12 class="px-1">
+                        <v-card height="400px">
+                            <extra-info></extra-info>
+                        </v-card>
+                    </v-flex>
                 </v-layout>
                 <v-divider></v-divider>
+                <v-layout row wrap>
+                    <v-flex>Parte inferior</v-flex>
+                </v-layout>
             </v-card>
         </v-dialog>
     </v-layout>
 </template>
 
 <script>
-    import { isHighPriority, isUnassigned } from '../utilities/helpers'
+    import { isHighPriority, isUnassigned } from '../utilities/helpers';
+    import ExtraInfo from './ExtraInfo'
+    import EditableTextField from './EditableTextField'
 
     export default {
+
+        components: { ExtraInfo, EditableTextField },
 
         props: {
             taskId: {
@@ -90,3 +140,19 @@
         }
     }
 </script>
+
+<style>
+    .lastUpdate {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: auto;
+        color: #fff;
+        font-size: 14px;
+        font-weight: bold;
+        text-shadow: 1px 1px #403f3f;
+    }
+    .lastUpdate i {
+        width: 10px;
+    }
+</style>

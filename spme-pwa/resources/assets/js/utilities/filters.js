@@ -9,7 +9,9 @@ Vue.filter('justDate', (date) => {
  * Format date with time
  */
 Vue.filter('fullDateAndTime', (date) => {
-    return moment(date).format('DD MMM h:mm A')
+    let end = moment(new Date())
+    return moment(date).format('DD MMMM, h:mm A') + ' (actualizado ' +end.to(date) + ')'
+    // return moment(date).format('DD MMM h:mm A')
 });
 
 /**
