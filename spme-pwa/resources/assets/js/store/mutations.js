@@ -5,6 +5,8 @@ export default {
     },
 
     set_tasks(state, payload) {
+        console.log(payload);
+
         payload.task ? state.tasks.push(payload.task) : state.tasks = payload.tasks;
     },
 

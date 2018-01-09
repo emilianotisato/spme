@@ -20,7 +20,17 @@
                                 <editable-text-field
                                 name="subject"
                                 label="Nombre"
+                                :patchUrl="patchUrl"
                                 :value="task.subject"
+                                @updated="updateTask"
+                                ></editable-text-field>
+                                <editable-text-field
+                                name="description"
+                                label="Descripcion"
+                                :patchUrl="patchUrl"
+                                :multiline="true"
+                                :value="task.description"
+                                @updated="updateTask"
                                 ></editable-text-field>
                             </v-card-text>
                             <v-bottom-nav
@@ -108,10 +118,13 @@
 
         },
 
+        computed: {
+            patchUrl() {
+                return App.api.postTask + '/' + this.taskId
+            }
+        },
+
         methods: {
-            nToBr(text) {
-                return text.replace(/\n/g, "<br />")
-            },
 
             setTask(){
                 let task = this.$store.getters.taskById(this.taskId) // Check if task is already loaded in the store
@@ -139,6 +152,10 @@
 
             closeTab(){
                 this.$emit('closeTab')
+            },
+
+            updateTask(task) {
+                this.$store.commit('update_tasks', task);
             }
         }
     }
