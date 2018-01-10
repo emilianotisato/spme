@@ -6,7 +6,7 @@
                     <v-btn icon @click.stop="closeTab" dark>
                         <v-icon>close</v-icon>
                     </v-btn>
-                    <v-toolbar-title>Task {{ task.id }} <span class="hidden-sm-and-down">| {{ task.subject }}</span></v-toolbar-title>
+                    <v-toolbar-title>Tarea {{ task.id }} <span class="hidden-sm-and-down" @click="editSubject">| {{ task.subject }}</span></v-toolbar-title>
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
                         <v-btn dark flat @click.stop="showCloseTaskForm = !showCloseTaskForm"><v-icon dark left>done_all</v-icon> <span class="hidden-sm-and-down">Marcar como Finalizado</span></v-btn>
@@ -17,12 +17,32 @@
                     <v-flex md4 xs12 class="px-1">
                         <v-card height="400px">
                             <v-card-text>
+                                Ok
+                            </v-card-text>
+                            <v-bottom-nav
+                            absolute
+                            :value="true"
+                            color="light-green darken-2"
+                            style="justify-content: left;"
+                            >
+                            <div class="lastUpdate">
+                                <v-icon dark left>updated</v-icon> {{ task.updated_at | fullDateAndTime }}
+                            </div>
+                            </v-bottom-nav>
+                        </v-card>
+                    </v-flex>
+                    <v-flex md4 xs12 class="px-1">
+                        <v-card height="400px">
+                            <v-card-text>
                                 <editable-text-field
+                                ref="taskSubject"
                                 name="subject"
                                 label="Nombre"
                                 :patchUrl="patchUrl"
                                 :value="task.subject"
                                 @updated="updateTask"
+                                elementClass="title"
+                                elementStyles="height:80px;"
                                 ></editable-text-field>
                                 <editable-text-field
                                 name="description"
@@ -31,6 +51,7 @@
                                 :multiline="true"
                                 :value="task.description"
                                 @updated="updateTask"
+                                elementStyles="height:230px;"
                                 ></editable-text-field>
                             </v-card-text>
                             <v-bottom-nav
@@ -49,20 +70,6 @@
                                 <v-icon>folder_open</v-icon>
                                  </v-badge>
                             </v-btn>
-                            </v-bottom-nav>
-                        </v-card>
-                    </v-flex>
-                    <v-flex md4 xs12 class="px-1">
-                        <v-card height="400px">
-                            <v-bottom-nav
-                            absolute
-                            :value="true"
-                            color="light-green darken-2"
-                            style="justify-content: left;"
-                            >
-                            <div class="lastUpdate">
-                                <v-icon dark left>updated</v-icon> {{ task.updated_at | fullDateAndTime }}
-                            </div>
                             </v-bottom-nav>
                         </v-card>
                     </v-flex>
@@ -152,6 +159,10 @@
 
             closeTab(){
                 this.$emit('closeTab')
+            },
+
+            editSubject() {
+                this.$refs.taskSubject.$el.firstChild.click()
             },
 
             updateTask(task) {

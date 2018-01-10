@@ -5,7 +5,14 @@
         </transition> -->
 
         <transition enter-active-class="animated fadeIn">
-            <p v-if="!editMode" v-html="nToBr(value)" @click="editMode = true"></p>
+            <div v-if="!editMode"
+                v-html="nToBr(value)"
+                @click="editMode = true"
+                class="scrollarea"
+                :class="elementClass"
+                :style="elementStyles"
+                ></div>
+
             <div v-else>
 
                 <v-text-field
@@ -39,12 +46,20 @@ export default {
             required: true,
         },
         value: {
+            required: true,
         },
         label: {
             type: String,
         },
         multiline: {
             type: Boolean,
+        },
+        elementClass: {
+            type: String,
+        },
+        elementStyles: {
+            type: String,
+            default: 'height:50px;'
         }
     },
 
@@ -85,5 +100,28 @@ export default {
 </script>
 
 <style>
+    .scrollarea {
+        overflow-y: auto;
+    }
+
+    .scrollarea::-webkit-scrollbar-track
+    {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        border-radius: 10px;
+        background-color: #F5F5F5;
+    }
+
+    .scrollarea::-webkit-scrollbar
+    {
+        width: 12px;
+        background-color: #F5F5F5;
+    }
+
+    .scrollarea::-webkit-scrollbar-thumb
+    {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+        background-color: #555;
+    }
 
 </style>
