@@ -108,7 +108,7 @@
                     </v-flex>
                     <v-flex md4 xs12 class="px-1">
                         <v-card height="400px">
-                            <extra-info></extra-info>
+                            <extra-info :task="task"></extra-info>
                         </v-card>
                     </v-flex>
                 </v-layout>
