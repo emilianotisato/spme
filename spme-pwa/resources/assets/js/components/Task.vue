@@ -16,9 +16,42 @@
                 <v-layout row wrap>
                     <v-flex md4 xs12 class="px-1">
                         <v-card height="400px">
-                            <v-card-text>
-                                Ok
-                            </v-card-text>
+                                <p class="grey--text pa-3 ma-0"><strong>Inicio: </strong>Tarea creada por {{ task.user.name }} el {{ task.created_at | justDate }}</p>
+                                <p class="grey--text px-3 ma-0"><strong>Estado: </strong></p>
+                                <v-list two-line>
+                                    <v-list-tile ripple @click="">
+                                        <v-list-tile-content>
+                                            <v-list-tile-title v-if="task.assigned">{{ task.assigned.name }}</v-list-tile-title>
+                                            <v-list-tile-title v-else>Sin asignar!</v-list-tile-title>
+                                            <v-list-tile-sub-title>Asignada a</v-list-tile-sub-title>
+                                        </v-list-tile-content>
+                                        <v-list-tile-action>
+                                            <v-icon v-if="task.assigned" color="green">perm_identity</v-icon>
+                                            <v-icon v-else color="red">perm_identity</v-icon>
+                                        </v-list-tile-action>
+                                    </v-list-tile>
+                                     <v-divider></v-divider>
+                                    <v-list-tile ripple @click="">
+                                        <v-list-tile-content>
+                                            <v-list-tile-title>{{ task.priority.label }}</v-list-tile-title>
+                                            <v-list-tile-sub-title>Prioridad</v-list-tile-sub-title>
+                                        </v-list-tile-content>
+                                        <v-list-tile-action>
+                                            <v-icon :color="priorityColor">error_outline</v-icon>
+                                        </v-list-tile-action>
+                                    </v-list-tile>
+                                    <v-divider></v-divider>
+                                    <v-list-tile ripple @click="">
+                                        <v-list-tile-content>
+                                            <v-list-tile-title>{{ task.status.label }}</v-list-tile-title>
+                                            <v-list-tile-sub-title>Estado</v-list-tile-sub-title>
+                                        </v-list-tile-content>
+                                        <v-list-tile-action>
+                                            <v-icon :color="task.status.color">{{ task.status.icon }}</v-icon>
+                                        </v-list-tile-action>
+                                    </v-list-tile>
+                                    <v-divider></v-divider>
+                                </v-list>
                             <v-bottom-nav
                             absolute
                             :value="true"
@@ -26,7 +59,7 @@
                             style="justify-content: left;"
                             >
                             <div class="lastUpdate">
-                                <v-icon dark left>updated</v-icon> {{ task.updated_at | fullDateAndTime }}
+                                <v-icon dark left>loop</v-icon> {{ task.updated_at | fullDateAndTime }}
                             </div>
                             </v-bottom-nav>
                         </v-card>
@@ -128,6 +161,17 @@
         computed: {
             patchUrl() {
                 return App.api.postTask + '/' + this.taskId
+            },
+            priorityColor() {
+                let level = this.task.priority.level
+
+                if(level >= 8) {
+                    return 'red'
+                } else if(level >=5) {
+                    return 'yellow'
+                } else {
+                    return 'green'
+                }
             }
         },
 
@@ -182,8 +226,5 @@
         font-size: 14px;
         font-weight: bold;
         text-shadow: 1px 1px #403f3f;
-    }
-    .lastUpdate i {
-        width: 10px;
     }
 </style>

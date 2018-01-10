@@ -18,6 +18,8 @@ class CreateStatusesTable extends Migration
 
             $table->string('name');
             $table->string('label');
+            $table->string('icon');
+            $table->string('color');
             $table->integer('order');
         });
     }
