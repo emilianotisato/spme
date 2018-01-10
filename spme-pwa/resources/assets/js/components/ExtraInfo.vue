@@ -19,6 +19,13 @@
         <span>Proyecto</span>
         <v-icon>trending_up</v-icon>
       </v-btn>
+      <v-btn flat color="teal" value="files">
+        <span>Archivos</span>
+        <v-badge overlap>
+          <span slot="badge">6</span>
+          <v-icon>folder_open</v-icon>
+        </v-badge>
+      </v-btn>
       <v-btn flat color="teal" value="notes">
         <span>Notas</span>
         <v-icon>bookmark</v-icon>

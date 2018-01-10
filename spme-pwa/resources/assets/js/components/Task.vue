@@ -13,109 +13,100 @@
                         <v-btn dark flat @click.stop="editMode = !editMode"><v-icon dark left>edit</v-icon> <span class="hidden-sm-and-down">Editar</span></v-btn>
                     </v-toolbar-items>
                 </v-toolbar>
-                <v-layout row wrap>
-                    <v-flex md4 xs12 class="px-1">
-                        <v-card height="400px">
-                                <p class="grey--text pa-3 ma-0"><strong>Inicio: </strong>Tarea creada por {{ task.user.name }} el {{ task.created_at | justDate }}</p>
-                                <p class="grey--text px-3 ma-0"><strong>Estado: </strong></p>
-                                <v-list two-line>
-                                    <v-list-tile ripple @click="">
-                                        <v-list-tile-content>
-                                            <v-list-tile-title v-if="task.assigned">{{ task.assigned.name }}</v-list-tile-title>
-                                            <v-list-tile-title v-else>Sin asignar!</v-list-tile-title>
-                                            <v-list-tile-sub-title>Asignada a</v-list-tile-sub-title>
-                                        </v-list-tile-content>
-                                        <v-list-tile-action>
-                                            <v-icon v-if="task.assigned" color="green">perm_identity</v-icon>
-                                            <v-icon v-else color="red">perm_identity</v-icon>
-                                        </v-list-tile-action>
-                                    </v-list-tile>
-                                     <v-divider></v-divider>
-                                    <v-list-tile ripple @click="">
-                                        <v-list-tile-content>
-                                            <v-list-tile-title>{{ task.priority.label }}</v-list-tile-title>
-                                            <v-list-tile-sub-title>Prioridad</v-list-tile-sub-title>
-                                        </v-list-tile-content>
-                                        <v-list-tile-action>
-                                            <v-icon :color="priorityColor">error_outline</v-icon>
-                                        </v-list-tile-action>
-                                    </v-list-tile>
-                                    <v-divider></v-divider>
-                                    <v-list-tile ripple @click="">
-                                        <v-list-tile-content>
-                                            <v-list-tile-title>{{ task.status.label }}</v-list-tile-title>
-                                            <v-list-tile-sub-title>Estado</v-list-tile-sub-title>
-                                        </v-list-tile-content>
-                                        <v-list-tile-action>
-                                            <v-icon :color="task.status.color">{{ task.status.icon }}</v-icon>
-                                        </v-list-tile-action>
-                                    </v-list-tile>
-                                    <v-divider></v-divider>
-                                </v-list>
-                            <v-bottom-nav
-                            absolute
-                            :value="true"
-                            color="light-green darken-2"
-                            style="justify-content: left;"
-                            >
-                            <div class="lastUpdate">
-                                <v-icon dark left>loop</v-icon> {{ task.updated_at | fullDateAndTime }}
-                            </div>
-                            </v-bottom-nav>
-                        </v-card>
-                    </v-flex>
-                    <v-flex md4 xs12 class="px-1">
-                        <v-card height="400px">
-                            <v-card-text>
-                                <editable-text-field
-                                ref="taskSubject"
-                                name="subject"
-                                label="Nombre"
-                                :patchUrl="patchUrl"
-                                :value="task.subject"
-                                @updated="updateTask"
-                                elementClass="title"
-                                elementStyles="height:80px;"
-                                ></editable-text-field>
-                                <editable-text-field
-                                name="description"
-                                label="Descripcion"
-                                :patchUrl="patchUrl"
-                                :multiline="true"
-                                :value="task.description"
-                                @updated="updateTask"
-                                elementStyles="height:230px;"
-                                ></editable-text-field>
-                            </v-card-text>
-                            <v-bottom-nav
-                            absolute
-                            :value="true"
-                            color="grey lighten-1"
-                            style="justify-content: left;"
-                            >
-                            <v-btn dark>
-                                <span>Archivos</span>
-                                <v-icon>note_add</v-icon>
-                            </v-btn>
-                            <v-btn dark>
-                                 <v-badge left>
-                                <span slot="badge">6</span>
-                                <v-icon>folder_open</v-icon>
-                                 </v-badge>
-                            </v-btn>
-                            </v-bottom-nav>
-                        </v-card>
-                    </v-flex>
-                    <v-flex md4 xs12 class="px-1">
-                        <v-card height="400px">
-                            <extra-info :task="task"></extra-info>
-                        </v-card>
-                    </v-flex>
-                </v-layout>
-                <v-divider></v-divider>
-                <v-layout row wrap>
-                    <v-flex>Parte inferior</v-flex>
-                </v-layout>
+                <div class="taskContent pt-1">
+                    <v-layout row wrap>
+                        <v-flex md8 xs12 class="px-1">
+                            <v-card>
+                                <v-card-text>
+                                    <v-layout row wrap>
+                                        <v-flex md8 xs12>
+                                            <editable-text-field
+                                            ref="taskSubject"
+                                            name="subject"
+                                            label="Nombre"
+                                            :patchUrl="patchUrl"
+                                            :value="task.subject"
+                                            @updated="updateTask"
+                                            elementClass="title"
+                                            elementStyles="height:80px;"
+                                            ></editable-text-field>
+                                            <editable-text-field
+                                            name="description"
+                                            label="Descripcion"
+                                            :patchUrl="patchUrl"
+                                            :multiline="true"
+                                            :value="task.description"
+                                            @updated="updateTask"
+                                            elementStyles="height:230px;"
+                                            ></editable-text-field>
+                                        </v-flex>
+                                        <v-flex md4 xs12 pa-3 mb-4>
+                                            <p class="grey--text pa-3 ma-0"><strong>Inicio: </strong>Tarea creada por {{ task.user.name }} el {{ task.created_at | justDate }}</p>
+                                            <!-- <p class="grey--text px-3 ma-0"><strong>Estado: </strong></p> -->
+                                            <v-list two-line>
+                                                <v-list-tile ripple @click="">
+                                                    <v-list-tile-content>
+                                                        <v-list-tile-title v-if="task.assigned">{{ task.assigned.name }}</v-list-tile-title>
+                                                        <v-list-tile-title v-else>Sin asignar!</v-list-tile-title>
+                                                        <v-list-tile-sub-title>Asignada a</v-list-tile-sub-title>
+                                                    </v-list-tile-content>
+                                                    <v-list-tile-action>
+                                                        <v-icon v-if="task.assigned" color="green">perm_identity</v-icon>
+                                                        <v-icon v-else color="red">perm_identity</v-icon>
+                                                    </v-list-tile-action>
+                                                </v-list-tile>
+                                                <v-divider></v-divider>
+                                                <v-list-tile ripple @click="">
+                                                    <v-list-tile-content>
+                                                        <v-list-tile-title>{{ task.priority.label }}</v-list-tile-title>
+                                                        <v-list-tile-sub-title>Prioridad</v-list-tile-sub-title>
+                                                    </v-list-tile-content>
+                                                    <v-list-tile-action>
+                                                        <v-icon :color="priorityColor">error_outline</v-icon>
+                                                    </v-list-tile-action>
+                                                </v-list-tile>
+                                                <v-divider></v-divider>
+                                                <v-list-tile ripple @click="">
+                                                    <v-list-tile-content>
+                                                        <v-list-tile-title>{{ task.status.label }}</v-list-tile-title>
+                                                        <v-list-tile-sub-title>Estado</v-list-tile-sub-title>
+                                                    </v-list-tile-content>
+                                                    <v-list-tile-action>
+                                                        <v-icon :color="task.status.color">{{ task.status.icon }}</v-icon>
+                                                    </v-list-tile-action>
+                                                </v-list-tile>
+                                            </v-list>
+                                        </v-flex>
+                                    </v-layout>
+                                </v-card-text>
+                                <v-bottom-nav
+                                absolute
+                                :value="true"
+                                color="light-green darken-2"
+                                style="justify-content: left;"
+                                >
+                                <div class="lastUpdate">
+                                    <v-icon dark left>loop</v-icon>&nbsp;&nbsp;&nbsp;{{ task.updated_at | fullDateAndTime }}
+                                </div>
+                                </v-bottom-nav>
+                            </v-card>
+                        </v-flex>
+                        <v-flex md4 xs12 class="px-1">
+                            <v-card>
+                                <extra-info :task="task"></extra-info>
+                            </v-card>
+                        </v-flex>
+                    </v-layout>
+                    <v-divider class="my-3"></v-divider>
+                    <v-layout row wrap>
+                        <v-flex md12 xs12>
+                            <v-icon left>comment</v-icon> Comentarios
+                        </v-flex>
+                        <v-flex md12 xs12>
+                            loopear updates
+                        </v-flex>
+                    </v-layout>
+                </div>
             </v-card>
         </v-dialog>
     </v-layout>
@@ -217,6 +208,16 @@
 </script>
 
 <style>
+    .taskContent {
+        max-width: 1280px;
+        margin: auto;
+    }
+
+    .taskContent .card {
+        height: auto;
+        min-height: 400px;
+    }
+
     .lastUpdate {
         display: flex;
         align-items: center;
@@ -227,4 +228,5 @@
         font-weight: bold;
         text-shadow: 1px 1px #403f3f;
     }
+
 </style>
