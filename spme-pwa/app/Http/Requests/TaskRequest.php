@@ -23,8 +23,32 @@ class TaskRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        if ($this->method() === 'POST') {
+            return [
+                'assigned_user' => 'nullable|exists:users,id',
+                'project_id' => 'required|exists:projects,id',
+                'priority_id' => 'required|exists:priorities,id',
+                'status_id' => 'required|exists:statuses,id',
+                'client_visibility' => 'boolean',
+                'subject' => 'required|string',
+                'description' => 'nullable|string',
+                'closed' => 'date',
+            ];
+
+        }
+
+        if ($this->method() === 'PATCH') {
+            return [
+                'assigned_user' => 'sometimes|nullable|exists:users,id',
+                'project_id' => 'sometimes|required|exists:projects,id',
+                'priority_id' => 'sometimes|required|exists:priorities,id',
+                'status_id' => 'sometimes|required|exists:statuses,id',
+                'client_visibility' => 'sometimes|boolean',
+                'subject' => 'sometimes|required|string',
+                'description' => 'sometimes|nullable|string',
+                'closed' => 'sometimes|date',
+            ];
+
+        }
     }
 }

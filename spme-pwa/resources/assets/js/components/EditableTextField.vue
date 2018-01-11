@@ -11,6 +11,7 @@
                 class="scrollarea"
                 :class="elementClass"
                 :style="elementStyles"
+
                 ></div>
 
             <div v-else>
@@ -21,6 +22,8 @@
                     :label="label"
                     :multi-line="multiline"
                     :value="value"
+                    :rules="[()=> {errors.length >=1}]"
+                    :error-messages="errors[0]"
                     autofocus
                     ></v-text-field>
 
@@ -66,7 +69,8 @@ export default {
     data () {
         return {
             editMode: false,
-            modified: ''
+            modified: '',
+            errors: []
         }
     },
 
@@ -88,11 +92,15 @@ export default {
         },
 
         save() {
+            this.errors = []
+
             App.axios.patch(this.patchUrl, this.params)
-            .then(function (response) {
+            .then((response) => {
                 this.$emit('updated', response.data)
                 this.editMode = false
-            }.bind(this)).catch(error => console.log(error));
+            }).catch((error) => {
+                this.errors = JSON.parse(error.request.response).errors[this.name]
+            });
         }
     }
 
