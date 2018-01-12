@@ -69,7 +69,7 @@ export default {
         },
         nullLabel: {
             type: String,
-            default: 'Remover'
+            default: '(x) Desasingnar'
         },
         multiline: {
             type: Boolean,

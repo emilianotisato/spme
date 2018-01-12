@@ -44,12 +44,12 @@
                                             <p class="grey--text pa-3 ma-0">Tarea creada por <strong>{{ task.user.name }}</strong> el {{ task.created_at | justDate }}</p>
                                             <!-- <p class="grey--text px-3 ma-0"><strong>Estado: </strong></p> -->
                                             <v-list two-line>
-                                                <v-list-tile ripple @click="$refs.asignedUser.$el.firstChild.click()">
+                                                <v-list-tile ripple @click="$refs.assigned_user.$el.firstChild.click()">
                                                     <v-list-tile-content>
                                                         <!-- <v-list-tile-title v-if="task.assigned">{{ task.assigned.name }}</v-list-tile-title> -->
                                                         <editable-select
                                                         v-if="task.assigned"
-                                                        ref="asignedUser"
+                                                        ref="assigned_user"
                                                         name="assigned_user"
                                                         :value="task.assigned.name"
                                                         :items="$store.getters.users"
@@ -64,7 +64,7 @@
                                                         <!-- <v-list-tile-title v-else>Sin asignar!</v-list-tile-title> -->
                                                         <editable-select
                                                         v-else
-                                                        ref="asignedUser"
+                                                        ref="assigned_user"
                                                         name="assigned_user"
                                                         value="Sin asignar!"
                                                         :items="$store.getters.users"
@@ -83,9 +83,20 @@
                                                     </v-list-tile-action>
                                                 </v-list-tile>
                                                 <v-divider></v-divider>
-                                                <v-list-tile ripple @click="">
+                                                <v-list-tile ripple @click="$refs.priority_id.$el.firstChild.click()">
                                                     <v-list-tile-content>
-                                                        <v-list-tile-title>{{ task.priority.label }}</v-list-tile-title>
+                                                        <!-- <v-list-tile-title>{{ task.priority.label }}</v-list-tile-title> -->
+                                                        <editable-select
+                                                        ref="priority_id"
+                                                        name="priority_id"
+                                                        :value="task.priority.label"
+                                                        :items="$store.getters.priorities"
+                                                        itemText="label"
+                                                        itemValue="id"
+                                                        label="Prioridad"
+                                                        :patchUrl="patchUrl"
+                                                        @updated="updateTask">
+                                                        </editable-select>
                                                         <v-list-tile-sub-title>Prioridad</v-list-tile-sub-title>
                                                     </v-list-tile-content>
                                                     <v-list-tile-action>
@@ -93,9 +104,20 @@
                                                     </v-list-tile-action>
                                                 </v-list-tile>
                                                 <v-divider></v-divider>
-                                                <v-list-tile ripple @click="">
+                                                <v-list-tile ripple @click="$refs.status_id.$el.firstChild.click()">
                                                     <v-list-tile-content>
-                                                        <v-list-tile-title>{{ task.status.label }}</v-list-tile-title>
+                                                        <!-- <v-list-tile-title>{{ task.status.label }}</v-list-tile-title> -->
+                                                        <editable-select
+                                                        ref="status_id"
+                                                        name="status_id"
+                                                        :value="task.status.label"
+                                                        :items="$store.getters.statuses"
+                                                        itemText="label"
+                                                        itemValue="id"
+                                                        label="Estado"
+                                                        :patchUrl="patchUrl"
+                                                        @updated="updateTask">
+                                                        </editable-select>
                                                         <v-list-tile-sub-title>Estado</v-list-tile-sub-title>
                                                     </v-list-tile-content>
                                                     <v-list-tile-action>
