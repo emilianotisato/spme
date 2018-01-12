@@ -41,12 +41,23 @@
                                             ></editable-text-field>
                                         </v-flex>
                                         <v-flex md4 xs12 pa-3 mb-4>
-                                            <p class="grey--text pa-3 ma-0"><strong>Inicio: </strong>Tarea creada por {{ task.user.name }} el {{ task.created_at | justDate }}</p>
+                                            <p class="grey--text pa-3 ma-0">Tarea creada por <strong>{{ task.user.name }}</strong> el {{ task.created_at | justDate }}</p>
                                             <!-- <p class="grey--text px-3 ma-0"><strong>Estado: </strong></p> -->
                                             <v-list two-line>
-                                                <v-list-tile ripple @click="">
+                                                <v-list-tile ripple @click="$refs.asignedUser.$el.firstChild.click()">
                                                     <v-list-tile-content>
-                                                        <v-list-tile-title v-if="task.assigned">{{ task.assigned.name }}</v-list-tile-title>
+                                                        <editable-select
+                                                        ref="asignedUser"
+                                                        name="assigned_user"
+                                                        :value="task.assigned.name"
+                                                        :items="$store.getters.users"
+                                                        itemText="name"
+                                                        itemValue="id"
+                                                        label="Asignada a"
+                                                        :patchUrl="patchUrl"
+                                                        @updated="updateTask"
+                                                        v-if="task.assigned"></editable-select>
+                                                        <!-- <v-list-tile-title v-if="task.assigned">{{ task.assigned.name }}</v-list-tile-title> -->
                                                         <v-list-tile-title v-else>Sin asignar!</v-list-tile-title>
                                                         <v-list-tile-sub-title>Asignada a</v-list-tile-sub-title>
                                                     </v-list-tile-content>
@@ -115,11 +126,12 @@
 <script>
     import { isHighPriority, isUnassigned } from '../utilities/helpers';
     import ExtraInfo from './ExtraInfo'
+    import EditableSelect from './EditableSelect'
     import EditableTextField from './EditableTextField'
 
     export default {
 
-        components: { ExtraInfo, EditableTextField },
+        components: { ExtraInfo, EditableTextField, EditableSelect },
 
         props: {
             taskId: {

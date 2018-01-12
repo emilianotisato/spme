@@ -3,29 +3,33 @@
 
         <transition enter-active-class="animated fadeIn">
             <div v-if="!editMode"
-                v-html="nToBr(value)"
-                @mouseup="setEditMode"
-                class="scrollarea"
+                v-text="value"
+                @click="setEditMode"
+                class="showText"
                 :class="elementClass"
                 :style="elementStyles"
                 ></div>
 
             <div v-else>
 
-                <v-text-field
+                    <v-select
+                    ref="selectComponent"
                     v-model="modified"
+                    :items="items"
                     :name="name"
                     :label="label"
                     :multi-line="multiline"
-                    :value="value"
+                    :single-line="!multiline"
+                    :item-text="itemText"
+                    :item-value="itemValue"
                     :rules="[validateField]"
                     :error-messages="errors[0]"
-                    autofocus
-                    ></v-text-field>
+                    autocomplete
+                    @change="onChange"
+                    ></v-select>
 
-                <div class="right">
+                <div class="cancelSelelection">
                     <v-btn @click.prevent="cancel" flat icon color="grey"><v-icon>cancel</v-icon></v-btn>
-                    <v-btn @click.prevent="save" flat icon color="green"><v-icon>save</v-icon></v-btn>
                 </div>
 
             </div>
@@ -47,6 +51,15 @@ export default {
         value: {
             required: true,
         },
+        items: {
+            required: true,
+        },
+        itemText: {
+            required: true,
+        },
+        itemValue: {
+            required: true,
+        },
         label: {
             type: String,
         },
@@ -58,7 +71,6 @@ export default {
         },
         elementStyles: {
             type: String,
-            default: 'height:50px;'
         }
     },
 
@@ -81,19 +93,18 @@ export default {
         }
     },
 
-    created() {
-        this.modified = this.value
-    },
-
     methods: {
-        nToBr(text) {
-            return text.replace(/\n/g, "<br />")
+        setEditMode() {
+            this.editMode = true
+            setTimeout(()=>{
+                this.$refs.selectComponent.focus()
+            }, 100)
         },
 
-        setEditMode() {
-            if(window.getSelection().type == 'Caret') {
-                this.editMode = true
-            }
+        onChange(value) {
+            this.modified = value
+            this.save()
+
         },
 
         save() {
@@ -118,29 +129,9 @@ export default {
 </script>
 
 <style>
-    .scrollarea {
-        overflow-y: auto;
-        cursor: pointer;
+    .cancelSelelection {
+        position: absolute;
+        right: 35px;
+        top: 5px;
     }
-
-    .scrollarea::-webkit-scrollbar-track
-    {
-        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
-        border-radius: 10px;
-        background-color: #F5F5F5;
-    }
-
-    .scrollarea::-webkit-scrollbar
-    {
-        width: 12px;
-        background-color: #F5F5F5;
-    }
-
-    .scrollarea::-webkit-scrollbar-thumb
-    {
-        border-radius: 10px;
-        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-        background-color: #555;
-    }
-
 </style>
