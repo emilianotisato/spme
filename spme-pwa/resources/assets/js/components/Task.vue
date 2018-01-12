@@ -46,19 +46,35 @@
                                             <v-list two-line>
                                                 <v-list-tile ripple @click="$refs.asignedUser.$el.firstChild.click()">
                                                     <v-list-tile-content>
+                                                        <!-- <v-list-tile-title v-if="task.assigned">{{ task.assigned.name }}</v-list-tile-title> -->
                                                         <editable-select
+                                                        v-if="task.assigned"
                                                         ref="asignedUser"
                                                         name="assigned_user"
                                                         :value="task.assigned.name"
                                                         :items="$store.getters.users"
                                                         itemText="name"
                                                         itemValue="id"
-                                                        label="Asignada a"
+                                                        label="Asignadr a"
+                                                        :isNullable="true"
                                                         :patchUrl="patchUrl"
-                                                        @updated="updateTask"
-                                                        v-if="task.assigned"></editable-select>
-                                                        <!-- <v-list-tile-title v-if="task.assigned">{{ task.assigned.name }}</v-list-tile-title> -->
-                                                        <v-list-tile-title v-else>Sin asignar!</v-list-tile-title>
+                                                        @updated="updateTask">
+                                                        </editable-select>
+
+                                                        <!-- <v-list-tile-title v-else>Sin asignar!</v-list-tile-title> -->
+                                                        <editable-select
+                                                        v-else
+                                                        ref="asignedUser"
+                                                        name="assigned_user"
+                                                        value="Sin asignar!"
+                                                        :items="$store.getters.users"
+                                                        itemText="name"
+                                                        itemValue="id"
+                                                        label="Asignadr a"
+                                                        :isNullable="true"
+                                                        :patchUrl="patchUrl"
+                                                        @updated="updateTask">
+                                                        </editable-select>
                                                         <v-list-tile-sub-title>Asignada a</v-list-tile-sub-title>
                                                     </v-list-tile-content>
                                                     <v-list-tile-action>

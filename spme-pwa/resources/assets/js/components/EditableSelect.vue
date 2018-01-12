@@ -15,7 +15,7 @@
                     <v-select
                     ref="selectComponent"
                     v-model="modified"
-                    :items="items"
+                    :items="itemsArray"
                     :name="name"
                     :label="label"
                     :multi-line="multiline"
@@ -63,6 +63,14 @@ export default {
         label: {
             type: String,
         },
+        isNullable: {
+            type: Boolean,
+            default: false
+        },
+        nullLabel: {
+            type: String,
+            default: 'Remover'
+        },
         multiline: {
             type: Boolean,
         },
@@ -83,6 +91,15 @@ export default {
     },
 
     computed: {
+        itemsArray() {
+            let array = this.items
+
+            if(this.isNullable) {
+                array.unshift({[this.itemValue]: null, [this.itemText]: this.nullLabel})
+            }
+
+            return array
+        },
         params() {
             let params = {}
             params[this.name] = this.modified
