@@ -94,16 +94,18 @@ class Task extends Model
     }
 
     /**
-     * Apply the scope all Eloquent query builder.
+     * The "booting" method of the model.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
-     * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return void
      */
-    public function apply(Builder $builder, Model $model)
+    protected static function boot()
     {
-        $builder->orderBy('created_at', 'DESC')
+        parent::boot();
+
+        static::addGlobalScope('closed', function (Builder $builder) {
+            $builder->orderBy('created_at', 'DESC')
                 ->where('closed', null);
+        });
     }
 
     /**

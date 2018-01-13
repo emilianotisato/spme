@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Update extends Model
 {
@@ -47,14 +48,16 @@ class Update extends Model
     }
 
     /**
-     * Apply the scope all Eloquent query builder.
+     * The "booting" method of the model.
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $builder
-     * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return void
      */
-    public function apply(Builder $builder, Model $model)
+    protected static function boot()
     {
-        $builder->orderBy('created_at', 'DESC');
+        parent::boot();
+
+        static::addGlobalScope('ordered', function (Builder $builder) {
+            $builder->orderBy('created_at', 'DESC');
+        });
     }
 }
