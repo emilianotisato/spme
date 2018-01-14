@@ -10,7 +10,7 @@ Vue.filter('justDate', (date) => {
  */
 Vue.filter('fullDateAndTime', (date) => {
     let end = moment(new Date())
-    return 'actualizado ' + end.to(date) + ' (' + moment(date).format('DD MMMM, h:mm A') + ')'
+    return 'actualizado ' + end.to(date) + ' (' + moment(date).format('DD MMMM, h:mm a') + ')'
     // return moment(date).format('DD MMM h:mm A')
 });
 

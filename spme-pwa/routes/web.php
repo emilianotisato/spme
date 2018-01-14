@@ -20,12 +20,13 @@ Route::group([
     Route::get('get-auth-user', 'Api\UserController@getUser')->name('getUser');
     Route::post('update-user-password', 'Auth\UpdatePasswordController@update')->name('updatePassword');
     Route::get('get-users', 'Api\UserController@getUsers')->name('getUsers');
-    Route::get('get-tasks/{id}', 'Api\TaskController@getTaskById');
     Route::get('get-tasks', 'Api\TaskController@getTasks')->name('getTasks');
+    Route::get('get-tasks/{id}', 'Api\TaskController@getTaskById');
     Route::post('post-task', 'Api\TaskController@postTask')->name('postTask');
-    Route::post('post-task-update', 'Api\TaskController@postTaskUpdate')->name('postTaskUpdate');
     Route::post('post-task/{id}', 'Api\TaskController@editTask');
     Route::patch('post-task/{id}', 'Api\TaskController@editTaskField');
+    Route::post('post-task-update', 'Api\TaskController@postTaskUpdate')->name('postTaskUpdate');
+    Route::post('delete-task-update', 'Api\TaskController@deleteTaskUpdate')->name('deleteTaskUpdate');
     Route::get('get-clients', 'Api\ClientController@getClients')->name('getClients');
     Route::post('post-client', 'Api\ClientController@postClient')->name('postClient');
     Route::post('delete-client', 'Api\ClientController@deleteClient')->name('deleteClient');

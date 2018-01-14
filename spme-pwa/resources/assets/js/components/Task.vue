@@ -2,7 +2,7 @@
     <v-layout row justify-center v-if="task != null">
         <v-dialog v-model="dialog" fullscreen transition="dialog-bottom-transition" :overlay="false">
             <v-card>
-                <v-toolbar dark :class="activeList">
+                <v-toolbar dark :class="priorityColor">
                     <v-btn icon @click.stop="closeTab" dark>
                         <v-icon>close</v-icon>
                     </v-btn>
@@ -10,7 +10,19 @@
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
                         <v-btn dark flat @click.stop="showCloseTaskForm = !showCloseTaskForm"><v-icon dark left>done_all</v-icon> <span class="hidden-sm-and-down">Marcar como Finalizado</span></v-btn>
-                        <v-btn dark flat @click.stop="editMode = !editMode"><v-icon dark left>edit</v-icon> <span class="hidden-sm-and-down">Editar</span></v-btn>
+                        <v-menu bottom left>
+                            <v-btn icon slot="activator" dark>
+                                <v-icon>more_vert</v-icon>
+                            </v-btn>
+                            <v-list>
+                            <v-list-tile @click="">
+                                <v-list-tile-title>Eliminar</v-list-tile-title>
+                            </v-list-tile>
+                            <v-list-tile @click="">
+                                <v-list-tile-title>Posponer</v-list-tile-title>
+                            </v-list-tile>
+                            </v-list>
+                        </v-menu>
                     </v-toolbar-items>
                 </v-toolbar>
                 <div class="taskContent pt-1">
@@ -152,7 +164,26 @@
                             <v-icon left>comment</v-icon> Comentarios
                         </v-flex>
                         <v-flex md12 xs12>
-                            loopear updates
+                            <update-form :taskId="task.id"></update-form>
+                            <div class="ma-3" v-for="update in task.updates" :key="update.id">
+                                <v-avatar size="36px" slot="activator">
+                                    <img src="https://avatars1.githubusercontent.com/u/18596215?s=460&v=4" alt="">
+                                </v-avatar>
+                                {{ update.userName }} <span>{{ update.created_at | fullDateAndTime}}</span>
+                                <blockquote class="updates elevation-1 pa-3" v-html="$options.filters.nToBr(update.description)"></blockquote>
+                                <p class="ml-5 py-2" v-if="authUser.id == update.user_id">
+                                    <a>Editar</a> -
+                                    <v-menu bottom offset-y>
+                                        <a class="text--grey" slot="activator">Eliminar</a>
+                                        <v-card elevation-2>
+                                            <v-card-text>
+                                                <p>¿Seguro desea eliminar el comentario?</p>
+                                                <v-btn @click="deleteUpdate(update)" block color="error" dark>Eliminar</v-btn>
+                                            </v-card-text>
+                                        </v-card>
+                                    </v-menu>
+                                </p>
+                            </div>
                         </v-flex>
                     </v-layout>
                 </div>
@@ -164,12 +195,13 @@
 <script>
     import { isHighPriority, isUnassigned } from '../utilities/helpers';
     import ExtraInfo from './ExtraInfo'
+    import UpdateForm from './UpdateForm'
     import EditableSelect from './EditableSelect'
     import EditableTextField from './EditableTextField'
 
     export default {
 
-        components: { ExtraInfo, EditableTextField, EditableSelect },
+        components: { ExtraInfo, UpdateForm, EditableTextField, EditableSelect },
 
         props: {
             taskId: {
@@ -186,10 +218,7 @@
         data() {
             return {
                 task: null,
-                // editMode: false,
-                activeList: 'success',
                 form: {},
-                // showUpdateForm: false,
                 showCloseTaskForm: false
             }
         },
@@ -204,14 +233,12 @@
                 return App.api.postTask + '/' + this.taskId
             },
             priorityColor() {
-                let level = this.task.priority.level
-
-                if(level >= 8) {
-                    return 'red'
-                } else if(level >=5) {
-                    return 'yellow'
+                if(isHighPriority(this.task)) {
+                    return 'error'
+                } else if(isUnassigned(this.task)) {
+                    return 'warning'
                 } else {
-                    return 'green'
+                    return 'success'
                 }
             }
         },
@@ -228,11 +255,6 @@
 
                         this.form = new App.form(task) // Set form
 
-                        if(isHighPriority(task)) { // Set activeList
-                            this.activeList = 'error'
-                        } else if(isUnassigned(task)) {
-                            this.activeList = 'warning'
-                        }
                     } else {
                         checkLoaded();
                     }
@@ -252,6 +274,14 @@
 
             updateTask(task) {
                 this.$store.commit('update_tasks', task);
+            },
+
+            deleteUpdate(update) {
+                App.axios.post(App.api.deleteTaskUpdate, update)
+                .then((response) => {
+                    this.updateTask(response.data)
+                })
+
             }
         }
     }
@@ -277,6 +307,11 @@
         font-size: 14px;
         font-weight: bold;
         text-shadow: 1px 1px #403f3f;
+    }
+
+    .updates {
+        border-left: solid 3px grey;
+        margin-left: 42px;
     }
 
 </style>

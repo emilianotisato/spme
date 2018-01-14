@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use Auth;
 use App\Task;
+use Illuminate\Http\Request;
 use App\Http\Requests\TaskRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateRequest;
+use App\Update;
 
 class TaskController extends Controller
 {
@@ -34,6 +36,12 @@ class TaskController extends Controller
         return $task->fresh();
     }
 
+    /**
+     * Create a new coment/upate for the task
+     *
+     * @param UpdateRequest $request
+     * @return void
+     */
     public function postTaskUpdate(UpdateRequest $request)
     {
         Auth::user()->updates()->create($request->all());
@@ -45,5 +53,13 @@ class TaskController extends Controller
         }
 
         return $task;
+    }
+
+    public function deleteTaskUpdate(Request $request)
+    {
+        $update = Update::findOrFail($request->get('id'));
+        $update->delete();
+
+        return Task::findOrFail($request->get('task_id'));
     }
 }

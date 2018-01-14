@@ -8,25 +8,6 @@ export const permissionsMixin = {
             return this.$store.state.auth_user.id != undefined
         },
 
-        userIsActive() {
-            return Boolean(this.$store.state.auth_user.habilitado)
-        },
-
-        accountIsActive() {
-            return Boolean(this.$store.state.auth_user.account.habilitada)
-        },
-
-        isAdminEmailVerified() {
-
-            if(this.userHasRole('web_admin')) {
-
-                return Boolean(this.$store.state.auth_user.verified)
-            }
-
-            // Need an axios call here?? if auth user is not admin do I need to check this anyway??
-
-
-        }
     },
 
     methods: {

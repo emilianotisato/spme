@@ -98,7 +98,7 @@ class Form {
      */
     submit(requestType, url) {
         return new Promise((resolve, reject) => {
-            axios[requestType](url, this.data())
+            App.axios[requestType](url, this.data())
                 .then(response => {
                     this.onSuccess(response.data);
 

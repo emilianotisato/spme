@@ -5,14 +5,14 @@ window.App = {}
 window.App.api = {
   getUser: "/get-auth-user",
   updatePassword: "/update-user-password",
-  logout: "/logout",
-  getTasks: "/get-tasks",
   getUsers: "/get-users",
-  getClients: "/get-clients",
   getStatuses: "/get-statuses",
   getPriorities: "/get-priorities",
+  getTasks: "/get-tasks",
   postTask: "/post-task",
   postTaskUpdate: "/post-task-update",
+  deleteTaskUpdate: "/delete-task-update",
+  getClients: "/get-clients",
   postClient: "/post-client",
   postProject: "/post-project",
   deleteClient: "/delete-client",
@@ -25,10 +25,13 @@ import Vuetify from "vuetify";
 import VueRouter from "vue-router";
 import Form from "./utilities/Form";
 import Notifications from "vue-notification";
+import { permissionsMixin } from "./utilities/permissionsMixin";
+
 
 Vue.use(Vuetify);
 Vue.use(VueRouter);
 Vue.use(Notifications);
+Vue.mixin(permissionsMixin)
 
 window.Vue = Vue;
 window.App.form = Form;

@@ -25,6 +25,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'task_id' => 'required',
+            'due_date' => 'nullable|date'
         ];
     }
 }
