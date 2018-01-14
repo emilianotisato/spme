@@ -31,13 +31,35 @@ class TaskController extends Controller
      */
     public function editTaskField($id, TaskRequest $request)
     {
+        if (! Auth::user()->can('edit_tasks')) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        return 'Yes i can';
+
         $task = Task::findOrFail($id);
         $task->update($request->all());
         return $task->fresh();
     }
 
     /**
+     * Delete task
+     *
+     * @param Request $request
+     * @return void
+     */
+    public function deleteTask($id)
+    {
+        if (! Auth::user()->can('delete_tasks')) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        return Task::destroy($id);
+    }
+
+    /**
      * Create a new coment/upate for the task
+     * Also if 'closed" attribute is in the request, close the asociated task
      *
      * @param UpdateRequest $request
      * @return void
@@ -49,16 +71,28 @@ class TaskController extends Controller
         $task = Task::findOrFail($request->get('task_id'));
 
         if ($request->get('closed')) {
+            if (! Auth::user()->can('close_tasks')) {
+                abort(403, 'Unauthorized action.');
+            }
             $task->closeTask();
         }
 
         return $task;
     }
 
+    /**
+     * Delete update on task only if is owner of the update
+     *
+     * @param Request $request
+     * @return void
+     */
     public function deleteTaskUpdate(Request $request)
     {
-        $update = Update::findOrFail($request->get('id'));
-        $update->delete();
+        if (Auth::user()->id !== $request->get('user_id')) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        Update::destroy($request->get('id'));
 
         return Task::findOrFail($request->get('task_id'));
     }

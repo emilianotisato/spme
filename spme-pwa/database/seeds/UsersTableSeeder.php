@@ -52,8 +52,6 @@ class UsersTableSeeder extends Seeder
 
         // Freelance
         $freelance = Role::create(['name' => 'freelance']);
-        $freelance->givePermissionTo($edit_tasks);
-        $freelance->givePermissionTo($create_tasks);
         $freelance->givePermissionTo($close_tasks);
 
         /**
@@ -63,19 +61,27 @@ class UsersTableSeeder extends Seeder
         $admin->assignRole('admin');
 
         if (App::isLocal()) {
+            $manager = User::create(['name' => 'manager', 'email' => 'manager@thormaweb.com', 'password' => Hash::make('123456')]);
+            $manager->assignRole('manager');
             // Create staff
             factory(User::class, 2)->create()->each(function ($user) {
                 $user->assignRole('manager');
             });
 
+            $staff = User::create(['name' => 'staff', 'email' => 'staff@thormaweb.com', 'password' => Hash::make('123456')]);
+            $staff->assignRole('staff');
             factory(User::class, 10)->create()->each(function ($user) {
                 $user->assignRole('staff');
             });
 
+            $freelance = User::create(['name' => 'freelance', 'email' => 'freelance@thormaweb.com', 'password' => Hash::make('123456')]);
+            $freelance->assignRole('freelance');
             factory(User::class, 25)->create()->each(function ($user) {
                 $user->assignRole('freelance');
             });
 
+            $client = User::create(['name' => 'client', 'email' => 'client@thormaweb.com', 'password' => Hash::make('123456')]);
+            $client->assignRole('client');
             // Create some clients
             factory(App\Client::class, 50)->create()->each(function ($client) {
                 $user = factory(User::class)->make();

@@ -6,7 +6,7 @@ export const permissionsMixin = {
 
         isAuthUser() {
             return this.$store.state.auth_user.id != undefined
-        },
+        }
 
     },
 

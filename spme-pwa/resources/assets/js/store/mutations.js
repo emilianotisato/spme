@@ -1,6 +1,14 @@
 export default {
 
     set_auth_user(state, auth_user) {
+        auth_user.permissions = []
+
+        auth_user.roles.forEach(role => { // Extract all permissions in an array so we can ask quickly
+            role.permissions.forEach(permission => {
+                auth_user.permissions.indexOf(permission.name) === -1 ? auth_user.permissions.push(permission.name) : false
+            })
+        })
+
         state.auth_user = auth_user;
     },
 
@@ -10,6 +18,14 @@ export default {
 
     update_tasks(state, updatedTask) {
         Object.assign(state.tasks.find(task => task.id === updatedTask.id), updatedTask)
+    },
+
+    remove_task(state, deletedTaskId) {
+        state.tasks.forEach((task, index) => {
+            if (task.id == deletedTaskId) {
+                state.tasks.splice(index, 1)
+            }
+        });
     },
 
     set_clients(state, clients) {

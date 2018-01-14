@@ -7,7 +7,7 @@
 
             <v-text-field box multi-line
             label="Escribir un comentario..."
-            :rows="5"
+            :rows="3"
             v-model="form.description"></v-text-field>
 
             <v-btn type="submit" dark success :disabled="form.description == ''">Guardar</v-btn>

@@ -25,6 +25,7 @@ Route::group([
     Route::post('post-task', 'Api\TaskController@postTask')->name('postTask');
     Route::post('post-task/{id}', 'Api\TaskController@editTask');
     Route::patch('post-task/{id}', 'Api\TaskController@editTaskField');
+    Route::delete('post-task/{id}', 'Api\TaskController@deleteTask');
     Route::post('post-task-update', 'Api\TaskController@postTaskUpdate')->name('postTaskUpdate');
     Route::post('delete-task-update', 'Api\TaskController@deleteTaskUpdate')->name('deleteTaskUpdate');
     Route::get('get-clients', 'Api\ClientController@getClients')->name('getClients');

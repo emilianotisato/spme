@@ -10,17 +10,28 @@
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
                         <v-btn dark flat @click.stop="showCloseTaskForm = !showCloseTaskForm"><v-icon dark left>done_all</v-icon> <span class="hidden-sm-and-down">Marcar como Finalizado</span></v-btn>
-                        <v-menu bottom left>
+                        <v-menu bottom left v-if="userCan('edit_tasks')">
                             <v-btn icon slot="activator" dark>
                                 <v-icon>more_vert</v-icon>
                             </v-btn>
-                            <v-list>
-                            <v-list-tile @click="">
-                                <v-list-tile-title>Eliminar</v-list-tile-title>
-                            </v-list-tile>
-                            <v-list-tile @click="">
-                                <v-list-tile-title>Posponer</v-list-tile-title>
-                            </v-list-tile>
+                            <v-list style="width:150px">
+                                <v-list-tile @click="deleteTaskModal = true" v-if="userCan('delete_tasks')">
+                                    <v-list-tile-title><v-icon left color="grey">delete</v-icon> Eliminar</v-list-tile-title>
+                                        <v-dialog v-model="deleteTaskModal" max-width="290">
+                                            <v-card>
+                                                <v-card-title class="headline">¿Esta seguro que desea eliminar la tarea?</v-card-title>
+                                                <v-card-text>Esto eliminará permanentemente todos los datos asociados a la misma.</v-card-text>
+                                                <v-card-actions>
+                                                    <v-spacer></v-spacer>
+                                                    <v-btn color="grey darken-1" flat="flat" @click.native="deleteTaskModal = false">Cancelar</v-btn>
+                                                    <v-btn color="error darken-1" flat="flat" @click.native="deleteTask">Eliminar</v-btn>
+                                                </v-card-actions>
+                                            </v-card>
+                                        </v-dialog>
+                                </v-list-tile>
+                                <v-list-tile @click="">
+                                    <v-list-tile-title><v-icon left color="grey">access_time</v-icon> Posponer</v-list-tile-title>
+                                </v-list-tile>
                             </v-list>
                         </v-menu>
                     </v-toolbar-items>
@@ -219,7 +230,8 @@
             return {
                 task: null,
                 form: {},
-                showCloseTaskForm: false
+                showCloseTaskForm: false,
+                deleteTaskModal: false
             }
         },
 
@@ -274,6 +286,29 @@
 
             updateTask(task) {
                 this.$store.commit('update_tasks', task);
+            },
+
+            deleteTask() {
+                App.axios.delete(App.api.postTask + '/' + this.taskId)
+                .then((response) => {
+                    if (response.status == 200) {
+                        this.$notify({
+                        group: "success",
+                        title: "Atención!",
+                        text: "La tarea se ha eliminado con éxito",
+                        duration: 3000
+                        });
+                        this.$store.commit("remove_task", this.task.id);
+                        this.$emit('closeTab')
+                    } else {
+                        this.$notify({
+                        group: "error",
+                        title: "Error!",
+                        text: "No pudimos eliminar la tarea. Contactese con soporte.",
+                        duration: 5000
+                        });
+                    }
+                })
             },
 
             deleteUpdate(update) {
