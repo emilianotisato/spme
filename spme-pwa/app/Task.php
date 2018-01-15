@@ -103,9 +103,19 @@ class Task extends Model
         parent::boot();
 
         static::addGlobalScope('closed', function (Builder $builder) {
-            $builder->orderBy('created_at', 'DESC')
-                ->where('closed', null);
+            $builder->orderBy('created_at', 'DESC');
         });
+    }
+
+    /**
+     * Scope a query to only include non closed task
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopeOpened($query)
+    {
+        return $query->where('closed', null);
     }
 
     /**

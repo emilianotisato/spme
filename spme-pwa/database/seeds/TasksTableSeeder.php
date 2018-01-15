@@ -13,7 +13,7 @@ class TasksTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Task::class, 300)->create()->each(function($task){
+        factory(Task::class, 300)->create()->each(function ($task) {
             for ($x = 0; $x <= rand(1, 5); $x++) { // Create some updates
                 $task->updates()->save(factory(Update::class)->make());
             }
