@@ -17,24 +17,33 @@ Route::get('resetpass', 'AppController@resetpass');
 Route::group([
     'middleware' => 'auth'
 ], function () {
-    Route::get('get-auth-user', 'Api\UserController@getUser')->name('getUser');
-    Route::post('update-user-password', 'Auth\UpdatePasswordController@update')->name('updatePassword');
-    Route::get('get-users', 'Api\UserController@getUsers')->name('getUsers');
-    Route::get('get-tasks', 'Api\TaskController@getTasks')->name('getTasks');
+    // Users
+    Route::get('get-auth-user', 'Api\UserController@getUser');
+    Route::post('update-user-password', 'Auth\UpdatePasswordController@update');
+    Route::get('get-users', 'Api\UserController@getUsers');
+
+    // Tasks
+    Route::get('get-tasks', 'Api\TaskController@getTasks');
     Route::get('get-tasks/{id}', 'Api\TaskController@getTaskById');
-    Route::post('post-task', 'Api\TaskController@postTask')->name('postTask');
+    Route::post('post-task', 'Api\TaskController@postTask');
     Route::post('post-task/{id}', 'Api\TaskController@editTask');
     Route::patch('post-task/{id}', 'Api\TaskController@editTaskField');
     Route::delete('post-task/{id}', 'Api\TaskController@deleteTask');
-    Route::post('post-task-update', 'Api\TaskController@postTaskUpdate')->name('postTaskUpdate');
-    Route::post('delete-task-update', 'Api\TaskController@deleteTaskUpdate')->name('deleteTaskUpdate');
-    Route::get('get-clients', 'Api\ClientController@getClients')->name('getClients');
-    Route::post('post-client', 'Api\ClientController@postClient')->name('postClient');
-    Route::post('delete-client', 'Api\ClientController@deleteClient')->name('deleteClient');
-    Route::post('post-project', 'Api\ProjectController@postProject')->name('postProject');
-    Route::post('delete-project', 'Api\ProjectController@deleteProject')->name('deleteProject');
-    Route::get('get-statuses', 'Api\SystemController@getStatuses')->name('getStatuses');
-    Route::get('get-priorities', 'Api\SystemController@getPriorities')->name('getPriorities');
+    Route::post('post-task-update', 'Api\TaskController@postTaskUpdate');
+    Route::post('delete-task-update', 'Api\TaskController@deleteTaskUpdate');
+
+    // Clients
+    Route::get('get-clients', 'Api\ClientController@getClients');
+    Route::post('post-client', 'Api\ClientController@postClient');
+    Route::post('delete-client', 'Api\ClientController@deleteClient');
+
+    // Projects
+    Route::post('post-project/{clientId}', 'Api\ProjectController@postProject');
+    Route::post('delete-project', 'Api\ProjectController@deleteProject');
+
+    // Others
+    Route::get('get-statuses', 'Api\SystemController@getStatuses');
+    Route::get('get-priorities', 'Api\SystemController@getPriorities');
 });
 
 // Application routes (Laravel delegates to Vue)

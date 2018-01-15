@@ -1,22 +1,32 @@
 /**
- * Main boostrap.
+ * Main boostrap file.
  */
+
 window.App = {}
 window.App.api = {
+  // Users
   getUser: "/get-auth-user",
   updatePassword: "/update-user-password",
   getUsers: "/get-users",
-  getStatuses: "/get-statuses",
-  getPriorities: "/get-priorities",
+
+  // Tasks
   getTasks: "/get-tasks",
   postTask: "/post-task",
   postTaskUpdate: "/post-task-update",
   deleteTaskUpdate: "/delete-task-update",
+
+  // Clients
   getClients: "/get-clients",
   postClient: "/post-client",
-  postProject: "/post-project",
   deleteClient: "/delete-client",
-  deleteProject: "/delete-project"
+
+  // Projects
+  postProject: "/post-project",
+  deleteProject: "/delete-project",
+
+    // Others
+    getStatuses: "/get-statuses",
+    getPriorities: "/get-priorities",
 };
 
 import Vue from "vue";

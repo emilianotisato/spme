@@ -1,7 +1,6 @@
 <template>
     <div>
-        <form class="form-bordered"
-        @submit.prevent="onSubmit"
+        <form @submit.prevent="onSubmit"
         @change="form.errors.clear($event.target.name)"
         @keydown="form.errors.clear($event.target.name)">
 

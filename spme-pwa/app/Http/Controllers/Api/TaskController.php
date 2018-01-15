@@ -19,7 +19,7 @@ class TaskController extends Controller
      */
     public function getTasks()
     {
-        return Task::all();
+        return Task::opened()->get();
     }
 
     /**
@@ -34,8 +34,6 @@ class TaskController extends Controller
         if (! Auth::user()->can('edit_tasks')) {
             abort(403, 'Unauthorized action.');
         }
-
-        return 'Yes i can';
 
         $task = Task::findOrFail($id);
         $task->update($request->all());
