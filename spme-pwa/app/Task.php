@@ -20,7 +20,7 @@ class Task extends Model
         'project_id',
         'priority_id',
         'status_id',
-        'client_visibility',
+        'hide_client',
         'subject',
         'description',
         'closed',
