@@ -29,10 +29,10 @@ class TaskRequest extends FormRequest
                 'project_id' => 'required|exists:projects,id',
                 'priority_id' => 'required|exists:priorities,id',
                 'status_id' => 'required|exists:statuses,id',
-                'client_visibility' => 'boolean',
+                'hide_client' => 'boolean',
                 'subject' => 'required|string',
                 'description' => 'nullable|string',
-                'closed' => 'date',
+                'closed' => 'nullable|date',
             ];
 
         }
@@ -43,10 +43,10 @@ class TaskRequest extends FormRequest
                 'project_id' => 'sometimes|required|exists:projects,id',
                 'priority_id' => 'sometimes|required|exists:priorities,id',
                 'status_id' => 'sometimes|required|exists:statuses,id',
-                'client_visibility' => 'sometimes|boolean',
+                'hide_client' => 'sometimes|boolean',
                 'subject' => 'sometimes|required|string',
                 'description' => 'sometimes|nullable|string',
-                'closed' => 'sometimes|date',
+                'closed' => 'sometimes|nullable|date',
             ];
 
         }

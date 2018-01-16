@@ -23,6 +23,7 @@
                             <v-layout row wrap v-else>
                                 <v-flex xs10>
                                     <v-select
+                                        dense
                                         label="Cliente"
                                         :items="clients"
                                         item-value="id"
@@ -47,7 +48,9 @@
                             <v-layout row wrap v-else>
                                 <v-flex xs10>
                                     <v-select
+                                        dense
                                         label="Proyecto"
+                                        :error-messages="errorProject"
                                         :items="activeProjects"
                                         item-value="id"
                                         item-text="name"
@@ -62,27 +65,68 @@
                         </v-flex>
                         <v-flex xs12>
                         <v-text-field
-                            prepend-icon="mail"
-                            placeholder="Email"
+                            placeholder="Titulo de la tarea"
+                            v-model="form.subject"
+                            :error-messages="errorSubject"
                         ></v-text-field>
+                        </v-flex>
+                        <v-flex md4 xs12>
+                            <v-select
+                                label="Prioridad"
+                                :error-messages="errorPriority"
+                                :items="priorities"
+                                item-value="id"
+                                item-text="label"
+                                autocomplete
+                                v-model="form.priority_id"
+                            ></v-select>
+                        </v-flex>
+                        <v-flex md4 xs12>
+                            <v-select
+                                label="Estado"
+                                :error-messages="errorStatus"
+                                :items="statuses"
+                                item-value="id"
+                                item-text="label"
+                                autocomplete
+                                v-model="form.status_id"
+                            ></v-select>
+                        </v-flex>
+                        <v-flex md4 xs12>
+                            <v-select
+                                label="Asignar a"
+                                :error-messages="errorUser"
+                                :items="users"
+                                item-value="id"
+                                item-text="name"
+                                autocomplete
+                                v-model="form.assigned_user"
+                            ></v-select>
                         </v-flex>
                         <v-flex xs12>
                         <v-text-field
-                            type="tel"
-                            prepend-icon="phone"
-                            placeholder="(000) 000 - 0000"
-                            mask="phone"
-                        ></v-text-field>
-                        </v-flex>
-                        <v-flex xs12>
-                        <v-text-field
+                            multi-line
                             prepend-icon="notes"
-                            placeholder="Notes"
+                            placeholder="Descripcion"
+                            :error-messages="errorDescription"
+                            v-model="form.description"
                         ></v-text-field>
                         </v-flex>
                     </v-layout>
                 </v-container>
                 <v-card-actions>
+                    <div v-if="form.hide_client">
+                        <v-btn @click.prevent="form.hide_client = false" flat icon color="grey">
+                            <v-icon>visibility_off</v-icon>
+                        </v-btn>
+                        <span class="caption grey--text">No se muestra al cliente</span>
+                    </div>
+                    <div v-else>
+                        <v-btn @click.prevent="form.hide_client = true" flat icon color="green">
+                            <v-icon>visibility</v-icon>
+                        </v-btn>
+                        <span class="caption grey--text">Visible al cliente</span>
+                    </div>
                     <v-spacer></v-spacer>
                     <v-btn flat color="primary" @click="openTaskForm = false">Cancelar</v-btn>
                     <v-btn flat @click="submitForm">Crear</v-btn>
@@ -104,7 +148,7 @@ export default {
 
     data () {
             return {
-                openTaskForm: true,
+                openTaskForm: false,
                 clientForm: false,
                 projectForm: false,
                 form: new App.form({
@@ -112,7 +156,7 @@ export default {
                     project_id: '',
                     priority_id: '',
                     status_id: 1,
-                    client_visibility: true,
+                    hide_client: false,
                     subject: '',
                     description: '',
                     closed: null
@@ -137,21 +181,25 @@ export default {
                 return this.$store.getters.priorities
             },
 
-            // Validation rules
-            projectValidation() {
-                return this.form.errors.has('project_id') ? this.form.errors.get('project_id') : true
+
+            // Validations
+            errorProject() {
+                return this.form.errors.has('project_id') ? this.form.errors.get('project_id') : undefined
             },
-            subjectValidation() {
-                return this.form.errors.has('subject') ? this.form.errors.get('subject') : true
+            errorSubject() {
+                return this.form.errors.has('subject') ? this.form.errors.get('subject') : undefined
             },
-            descriptionValidation() {
-                return this.form.errors.has('description') ? this.form.errors.get('description') : true
+            errorDescription() {
+                return this.form.errors.has('description') ? this.form.errors.get('description') : undefined
             },
-            priorityValidation() {
-                return this.form.errors.has('priority_id') ? this.form.errors.get('priority_id') : true
+            errorPriority() {
+                return this.form.errors.has('priority_id') ? this.form.errors.get('priority_id') : undefined
             },
-            statusValidation() {
-                return this.form.errors.has('status_id') ? this.form.errors.get('status_id') : true
+            errorStatus() {
+                return this.form.errors.has('status_id') ? this.form.errors.get('status_id') : undefined
+            },
+            errorUser() {
+                return this.form.errors.has('assigned_user') ? this.form.errors.get('assigned_user') : undefined
             },
 
             // Post urls
@@ -191,7 +239,7 @@ export default {
             resetFormAndClose() {
                 this.form.reset()
                 this.form.status_id = 1
-                this.$store.state.openTaskForm = false
+                this.openTaskForm = false
             },
 
             submitForm() {
@@ -207,7 +255,7 @@ export default {
                         });
 
                         this.$store.commit('set_tasks', {task: response, tasks: null});
-                        this.$router.push({ name: 'task', params: {taskId: response.id}});
+                        this.$router.push({ name: 'task', params: {id: response.id}});
                     })
                     .catch((error) => {
                         console.log(error);
@@ -231,6 +279,8 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+    .input-group--select {
+        white-space: nowrap !important;
+    }
 </style>

@@ -4,11 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use Auth;
 use App\Task;
+use App\Update;
 use Illuminate\Http\Request;
 use App\Http\Requests\TaskRequest;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UpdateRequest;
-use App\Update;
 
 class TaskController extends Controller
 {
@@ -20,6 +20,18 @@ class TaskController extends Controller
     public function getTasks()
     {
         return Task::opened()->get();
+    }
+
+    /**
+     * Create full task
+     *
+     * @param TaskRequest $request
+     * @return void
+     */
+    public function postTask(TaskRequest $request)
+    {
+        $task = Auth::user()->openTasks()->create($request->all());
+        return $task->fresh();
     }
 
     /**

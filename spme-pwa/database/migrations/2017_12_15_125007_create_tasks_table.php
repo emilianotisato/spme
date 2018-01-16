@@ -32,7 +32,7 @@ class CreateTasksTable extends Migration
             $table->integer('status_id')->unsigned();
             $table->foreign('status_id')->references('id')->on('statuses')->onDelete('cascade');
 
-            $table->boolean('client_visibility')->default(true);
+            $table->boolean('hide_client')->default(false);
             $table->string('subject');
             $table->longText('description')->nullable();
             $table->timestamp('closed')->nullable()->default(null);
