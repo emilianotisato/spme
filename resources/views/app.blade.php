@@ -22,6 +22,7 @@
             app
             v-model="drawer"
             >
+            @if(!Auth::user()->hasRole('client'))
             <v-list dense>
                 <template v-for="(item, i) in menuItems">
                 <v-list-group v-if="item.children" v-model="item.model" no-action>
@@ -63,6 +64,30 @@
                 </v-list-tile>
                 </template>
             </v-list>
+            @else
+            <v-list dense>
+                <v-list-tile to="/">
+                    <v-list-tile-action>
+                    <v-icon>assignment_turned_in</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                    <v-list-tile-title>
+                        Panel de trabajo
+                    </v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+                <v-list-tile to="/reporte">
+                    <v-list-tile-action>
+                    <v-icon>timeline</v-icon>
+                    </v-list-tile-action>
+                    <v-list-tile-content>
+                    <v-list-tile-title>
+                        Reporte
+                    </v-list-tile-title>
+                    </v-list-tile-content>
+                </v-list-tile>
+            </v-list>
+            @endif
             </v-navigation-drawer>
             <v-toolbar
             color="blue darken-3"
@@ -75,6 +100,7 @@
                 <v-toolbar-side-icon @click.stop="drawer = !drawer"></v-toolbar-side-icon>
                 <span class="hidden-xs-only">{{ config( 'app.name') }}</span>
             </v-toolbar-title>
+            @if(!Auth::user()->hasRole('client'))
             <v-text-field
                 light
                 solo
@@ -83,6 +109,7 @@
                 placeholder="Buscar..."
                 style="max-width: 500px; min-width: 128px"
             ></v-text-field>
+            @endif
             <div class="d-flex align-center" style="margin-left: auto">
                 <v-btn icon>
                 <v-icon>apps</v-icon>

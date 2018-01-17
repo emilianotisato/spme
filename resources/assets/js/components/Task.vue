@@ -10,12 +10,12 @@
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
                         <v-btn dark flat @click.stop="showCloseTaskForm = !showCloseTaskForm"><v-icon dark left>done_all</v-icon> <span class="hidden-sm-and-down">Marcar como Finalizado</span></v-btn>
-                        <v-menu bottom left v-if="userCan('edit_tasks')">
+                        <v-menu bottom left v-if="userCan('task_edit')">
                             <v-btn icon slot="activator" dark>
                                 <v-icon>more_vert</v-icon>
                             </v-btn>
                             <v-list style="width:150px">
-                                <v-list-tile @click="deleteTaskModal = true" v-if="userCan('delete_tasks')">
+                                <v-list-tile @click="deleteTaskModal = true" v-if="userCan('task_delete')">
                                     <v-list-tile-title><v-icon left color="grey">delete</v-icon> Eliminar</v-list-tile-title>
                                         <v-dialog v-model="deleteTaskModal" max-width="290">
                                             <v-card>

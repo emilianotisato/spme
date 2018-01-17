@@ -1,5 +1,5 @@
 <template>
-<div v-if="userCan('create_tasks')">
+<div v-if="userCan('task_create')">
     <v-btn fab bottom right color="deep-orange accent-4" dark fixed
         @click.stop="openTaskForm = !openTaskForm">
         <v-icon>add</v-icon>
