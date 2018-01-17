@@ -17,6 +17,7 @@ class CreateClientsTable extends Migration
             $table->increments('id');
 
             $table->string('name');
+            $table->boolean('active')->default(true);
 
             $table->longText('config')->nullable();
             $table->longText('notes')->nullable();
