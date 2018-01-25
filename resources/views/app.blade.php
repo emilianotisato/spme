@@ -136,7 +136,7 @@
 			<notifications group="error" classes="vue-notification error" position="bottom right"></notifications>
         </v-app>
         @else
-        <v-app v-cloak>
+        <v-app v-cloak class="login-form">
             <v-dialog width="600px" :value='true' persistent=''>
                 <v-card hover='' style='background:white'>
                     <v-card class="blue darken-1">
