@@ -14,3 +14,8 @@
 @media print {
   .icon {display: none !important; visibility: hidden !important;}
 }
+
+.login-form {
+  background-image: url('/img/bg/bg2.jpg') !important;
+  background-size: cover !important;
+}
