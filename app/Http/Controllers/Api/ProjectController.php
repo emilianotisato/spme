@@ -12,7 +12,7 @@ class ProjectController extends Controller
 {
     public function postProject($clientId, ProjectRequest $request)
     {
-        if (!Auth::user()->can('manage_projects')) {
+        if (!Auth::user()->can('project_create')) {
             abort(403, 'Unauthorized action.');
         }
 

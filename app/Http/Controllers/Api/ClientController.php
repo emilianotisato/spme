@@ -16,7 +16,7 @@ class ClientController extends Controller
      */
     public function getClients()
     {
-        return Client::all()->load('projects');
+        return Client::with('projects')->all();
     }
 
     /**
@@ -27,7 +27,7 @@ class ClientController extends Controller
      */
     public function postClient(ClientRequest $request)
     {
-        if (!Auth::user()->can('manage_clients')) {
+        if (!Auth::user()->can('client_create')) {
             abort(403, 'Unauthorized action.');
         }
 

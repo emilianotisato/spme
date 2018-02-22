@@ -43,7 +43,7 @@ class TaskController extends Controller
      */
     public function editTaskField($id, TaskRequest $request)
     {
-        if (! Auth::user()->can('edit_tasks')) {
+        if (! Auth::user()->can('task_edit')) {
             abort(403, 'Unauthorized action.');
         }
 
@@ -60,7 +60,7 @@ class TaskController extends Controller
      */
     public function deleteTask($id)
     {
-        if (! Auth::user()->can('delete_tasks')) {
+        if (! Auth::user()->can('task_delete')) {
             abort(403, 'Unauthorized action.');
         }
 
@@ -81,7 +81,7 @@ class TaskController extends Controller
         $task = Task::findOrFail($request->get('task_id'));
 
         if ($request->get('closed')) {
-            if (! Auth::user()->can('close_tasks')) {
+            if (! Auth::user()->can('task_close')) {
                 abort(403, 'Unauthorized action.');
             }
             $task->closeTask();
