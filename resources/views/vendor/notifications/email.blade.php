@@ -6,7 +6,7 @@
 @if ($level == 'error')
 # Whoops!
 @else
-{{ __('emails.hello') }}!
+# {{__('emails.hello')}}!
 @endif
 @endif
 
@@ -19,16 +19,16 @@
 {{-- Action Button --}}
 @isset($actionText)
 <?php
-switch ($level) {
-    case 'success':
-        $color = 'green';
-        break;
-    case 'error':
-        $color = 'red';
-        break;
-    default:
-        $color = 'blue';
-}
+    switch ($level) {
+        case 'success':
+            $color = 'green';
+            break;
+        case 'error':
+            $color = 'red';
+            break;
+        default:
+            $color = 'blue';
+    }
 ?>
 @component('mail::button', ['url' => $actionUrl, 'color' => $color])
 {{ $actionText }}
@@ -40,6 +40,13 @@ switch ($level) {
 {{ $line }}
 
 @endforeach
+
+{{-- Salutation --}}
+@if (! empty($salutation))
+{{ $salutation }}
+@else
+<br>{{ config('app.name') }}
+@endif
 
 {{-- Subcopy --}}
 @isset($actionText)
