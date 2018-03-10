@@ -1,5 +1,9 @@
 <?php
 
+Route::get('/demo', function () {
+    return new \App\Notifications\ResetPassword('dhfidihsdiuhiuewhfiuwehiuhweu');
+});
+
 Route::get('', 'AppController@index');
 
 // Auth routes

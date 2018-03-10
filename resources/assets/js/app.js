@@ -1,5 +1,7 @@
 require("./bootstrap");
 require('./utilities/filters') // Load global filters
+
+import 'babel-polyfill'			// To improve working on IE 11 and Safari 9
 import router from "./routes";
 import store from "./store/store";
 import TaskForm from './components/TaskForm'

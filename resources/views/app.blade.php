@@ -1,20 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>{{ config('app.name') }}</title>
+@extends('layouts.master')
 
-	<link href="{{ mix('/css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/vuetify.min.css') }}" rel="stylesheet">
-    <link rel="icon" type="image/png" href="/img/favicon.png">
-
-	<meta name="csrf-token" content="{{ csrf_token() }}">
-</head>
-<body>
-    <div id="vue-container">
-        @if(Auth::check())
+@section('container')
         <v-app id="spme" v-cloak>
             <v-navigation-drawer
             fixed
@@ -25,33 +11,6 @@
             @if(!Auth::user()->hasRole('client'))
             <v-list dense>
                 <template v-for="(item, i) in menuItems">
-                <v-list-group v-if="item.children" v-model="item.model" no-action>
-                    <v-list-tile slot="item" @click="">
-                    <v-list-tile-action>
-                        <v-icon>@{{ item.model ? item.icon : item['icon-alt'] }}</v-icon>
-                    </v-list-tile-action>
-                    <v-list-tile-content>
-                        <v-list-tile-title>
-                        @{{ item.title }}
-                        </v-list-tile-title>
-                    </v-list-tile-content>
-                    </v-list-tile>
-                    <v-list-tile
-                    v-for="(child, i) in item.children"
-                    :key="i"
-                    router
-                    :to="child.link"
-                    >
-                    <v-list-tile-action v-if="child.icon">
-                        <v-icon>@{{ child.icon }}</v-icon>
-                    </v-list-tile-action>
-                    <v-list-tile-content>
-                        <v-list-tile-title>
-                        @{{ child.title }}
-                        </v-list-tile-title>
-                    </v-list-tile-content>
-                    </v-list-tile>
-                </v-list-group>
                 <v-list-tile v-else router :to="item.link">
                     <v-list-tile-action>
                     <v-icon>@{{ item.icon }}</v-icon>
@@ -134,46 +93,5 @@
 			<notifications group="success" classes="vue-notification success" position="bottom right"></notifications>
 			<notifications group="warning" classes="vue-notification warn" position="bottom right"></notifications>
 			<notifications group="error" classes="vue-notification error" position="bottom right"></notifications>
-        </v-app>
-        @else
-        <v-app v-cloak class="login-form">
-            <v-dialog width="600px" :value='true' persistent=''>
-                <v-card hover='' style='background:white'>
-                    <v-card class="blue darken-1">
-                        <v-card-title class="white--text text-xs-center">
-                            Ingresar al sistema
-                        </v-card-title>
-                    </v-card>
-                <v-card>
-                <v-card-text class="pt-4">
-                    @if($errors->any())
-						<h4 class="error--text">Los datos son incorrectos. Intente nuevamente.</h4>
-					@endif
-					<form class="flex pb-2" method="post" action="/login">
-						{!! csrf_field() !!}
-						<v-layout row>
-							<v-flex md10 offset-md1>
-								<v-text-field type="email" name="email" label="Email" light></v-text-field>
-							</v-flex>
-						</v-layout>
-						<v-layout row>
-							<v-flex md10 offset-md1>
-								<v-text-field type="password" name="password" label="Contraseña" light></v-text-field>
-							</v-flex>
-						</v-layout>
-						<div class="text-xs-right">
-							<input type="hidden" name="remember" value="1">
-							<v-btn type="submit" primary dark>Ingresar</v-btn>
-						</div>
-					</form>
-					<span>
-						<a href="/password/email">Olvido su contraseña?</a>
-					</span>
-                </v-card-text>
-            </v-dialog>
-        </v-app>
-        @endif
-    </div>
-    <script src="{{mix('/js/app.js')}}"></script>
-</body>
-</html>
+		</v-app>
+@endsection
