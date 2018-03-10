@@ -13,6 +13,6 @@ let mix = require('laravel-mix');
 
 mix.js("resources/assets/js/app.js", "public/js").version();
 
-mix
-  .sass("resources/assets/sass/app.scss", "public/css")
-  .copy("node_modules/vuetify/dist/vuetify.min.css", "public/css");
+mix.sass("resources/assets/sass/app.scss", "public/css");
+//Commented because it gets updated every time we recompile css
+// mix.copy("node_modules/vuetify/dist/vuetify.min.css", "public/css");
