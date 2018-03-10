@@ -11,7 +11,7 @@
             @if(!Auth::user()->hasRole('client'))
             <v-list dense>
                 <template v-for="(item, i) in menuItems">
-                <v-list-tile v-else router :to="item.link">
+                <v-list-tile router :to="item.link">
                     <v-list-tile-action>
                     <v-icon>@{{ item.icon }}</v-icon>
                     </v-list-tile-action>

@@ -16,7 +16,7 @@ class ClientController extends Controller
      */
     public function getClients()
     {
-        return Client::with('projects')->all();
+        return Client::with('projects')->get();
     }
 
     /**
