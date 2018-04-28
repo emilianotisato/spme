@@ -87,7 +87,7 @@ class TaskController extends Controller
             $task->closeTask();
         }
 
-        return $task;
+        return $task->fresh();
     }
 
     /**

@@ -10,6 +10,17 @@
                     <v-spacer></v-spacer>
                     <v-toolbar-items>
                         <v-btn dark flat @click.stop="showCloseTaskForm = !showCloseTaskForm"><v-icon dark left>done_all</v-icon> <span class="hidden-sm-and-down">Marcar como Finalizado</span></v-btn>
+                        <v-dialog v-model="showCloseTaskForm">
+                            <v-card>
+                                <v-card-title class="headline">
+                                    ¿Esta seguro que desea cerrar la tarea?
+                                    <v-btn color="grey darken-1" flat="flat" @click.native="showCloseTaskForm = false">Cancelar</v-btn>
+                                    </v-card-title>
+                                <v-card-text>
+                                    <update-form :taskId="task.id" isForClose></update-form>
+                                </v-card-text>
+                            </v-card>
+                        </v-dialog>
                         <v-menu bottom left v-if="userCan('task_edit')">
                             <v-btn icon slot="activator" dark>
                                 <v-icon>more_vert</v-icon>
