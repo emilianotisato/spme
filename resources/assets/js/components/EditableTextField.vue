@@ -87,7 +87,10 @@ export default {
 
     methods: {
         nToBr(text) {
-            return text.replace(/\n/g, "<br />")
+            if(text != null) {
+                return text.replace(/\n/g, "<br />")
+            }
+            return ''
         },
 
         setEditMode() {
