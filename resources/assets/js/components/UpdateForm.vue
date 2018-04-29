@@ -55,11 +55,15 @@ export default {
         },
 
         mounted() {
-            this.form.task_id = this.taskId
-            this.form.closed = this.isForClose
+            this.setUpForm()
         },
 
         methods: {
+            setUpForm() {
+                this.form.reset()
+                this.form.task_id = this.taskId
+                this.form.closed = this.isForClose
+            },
 
             dueDate() {
                 if(this.date != null) {
@@ -81,9 +85,9 @@ export default {
                 }
                 this.form.post(window.App.api.postTaskUpdate)
                     .then((response) => {
-
                         this.$store.commit('update_tasks', response)
-                        this.form.reset()
+
+                        this.setUpForm()
 
                         if(response.closed != null) {
 

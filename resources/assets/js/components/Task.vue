@@ -191,10 +191,10 @@
                                 <v-avatar size="36px" slot="activator">
                                     <img src="https://avatars1.githubusercontent.com/u/18596215?s=460&v=4" alt="">
                                 </v-avatar>
-                                {{ update.userName }} <span>{{ update.created_at | fullDateAndTime}}</span>
+                                {{ update.userName }} | <span>{{ update.created_at | fullDateAndTime}}</span>
                                 <blockquote class="updates elevation-1 pa-3" v-html="$options.filters.nToBr(update.description)"></blockquote>
                                 <p class="ml-5 py-2" v-if="authUser.id == update.user_id">
-                                    <a>Editar</a> -
+                                    <!-- <a>Editar</a> - -->
                                     <v-menu bottom offset-y>
                                         <a class="text--grey" slot="activator">Eliminar</a>
                                         <v-card elevation-2>
