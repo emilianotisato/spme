@@ -55,7 +55,7 @@
                 <v-spacer></v-spacer>
                 <v-text-field
                         append-icon="search"
-                        label="Buscar"
+                        label="Filtrar tareas..."
                         single-line
                         v-model="search"
                         @input="searchInputChange"
