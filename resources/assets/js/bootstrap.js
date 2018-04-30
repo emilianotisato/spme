@@ -3,31 +3,7 @@
  */
 
 window.App = {}
-window.App.api = {
-  // Users
-  getUser: "/get-auth-user",
-  updatePassword: "/update-user-password",
-  getUsers: "/get-users",
-
-  // Tasks
-  getTasks: "/get-tasks",
-  postTask: "/post-task",
-  postTaskUpdate: "/post-task-update",
-  deleteTaskUpdate: "/delete-task-update",
-
-  // Clients
-  getClients: "/get-clients",
-  postClient: "/post-client",
-  deleteClient: "/delete-client",
-
-  // Projects
-  postProject: "/post-project",
-  deleteProject: "/delete-project",
-
-    // Others
-    getStatuses: "/get-statuses",
-    getPriorities: "/get-priorities",
-};
+window.App.api = window.SpmeAPI
 
 import Vue from "vue";
 import Moment from "moment";

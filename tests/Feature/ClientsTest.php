@@ -48,7 +48,7 @@ class ClientsTest extends TestCase
         $name = 'Demo Client';
 
         // When I post to create endpoint
-        $response = $this->post('/post-client', ['name' => $name]);
+        $response = $this->post(route('post-client'), ['name' => $name]);
 
         // Then we have return a new client with the rest of the field by default
         $response->assertSuccessful();

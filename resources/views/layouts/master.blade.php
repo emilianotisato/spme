@@ -11,6 +11,9 @@
     <link rel="icon" type="image/png" href="{{ config('app.favicon', '/img/favicon.png') }}">
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script>
+        window.SpmeAPI = {!! getJsonApi() !!};
+    </script>
 
 </head>
 <body>
@@ -20,4 +23,3 @@
     <script src="{{mix('/js/app.js')}}"></script>
 </body>
 </html>
-
