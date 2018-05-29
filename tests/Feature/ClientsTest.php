@@ -21,6 +21,25 @@ class ClientsTest extends TestCase
     {
         parent::setUp();
 
+        $this->createAdminUser();
+
+    }
+    /** @test */
+    public function can_create_clients_only_with_name()
+    {
+        // Given we only have the client name (e.g: Vue quick create component)
+        $name = 'Demo Client';
+
+        // When I post to create endpoint
+        $response = $this->post(route('post-client'), ['name' => $name]);
+
+        // Then we have returned a new client with the rest of the field by default
+        $response->assertSuccessful();
+        $response->assertJsonFragment(['name' => $name]);
+    }
+
+    public static function createAdminUser()
+    {
         $client_create = Permission::create(['name' => 'client_create']);
         $client_edit = Permission::create(['name' => 'client_edit']);
         $client_deactivate = Permission::create(['name' => 'client_deactivate']);
@@ -39,19 +58,5 @@ class ClientsTest extends TestCase
         $user->assignRole('admin');
 
         Auth::loginUsingId($user->id, true);
-
-    }
-    /** @test */
-    public function can_create_clients_only_with_name()
-    {
-        // Given we only have the client name (Vue quick create component)
-        $name = 'Demo Client';
-
-        // When I post to create endpoint
-        $response = $this->post(route('post-client'), ['name' => $name]);
-
-        // Then we have return a new client with the rest of the field by default
-        $response->assertSuccessful();
-        $response->assertJsonFragment(['name' => $name]);
     }
 }
