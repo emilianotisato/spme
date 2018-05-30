@@ -44,6 +44,7 @@ Route::group([
     // Others
     Route::get('get-statuses', 'Api\SystemController@getStatuses')->name('get-statuses');
     Route::get('get-priorities', 'Api\SystemController@getPriorities')->name('get-priorities');
+    Route::post('task-media-library/{taskId}', 'Api\MediaLibraryController@taskStore')->name('taskMediaLibrary');
 });
 
 // Application routes (Laravel delegates to Vue)

@@ -20,17 +20,12 @@ class ClientsTest extends TestCase
         parent::setUp();
 
         $this->authUser()
-        ->withRoles(['admin'])
         ->withPermissions([
             'client_create',
-            'client_edit',
-            'client_deactivate',
-            'client_delete',
-            'client_see_secret',
-            'client_add_notes'
             ]);
 
     }
+
     /** @test */
     public function can_create_clients_only_with_name()
     {
