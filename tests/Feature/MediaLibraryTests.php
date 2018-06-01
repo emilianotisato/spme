@@ -45,10 +45,12 @@ class MediaLibraryTests extends TestCase
            'file' => UploadedFile::fake()->image('test.png')
        ]);
 
-       // Then I have file in database asociated whit the task and the project
        $response->assertSuccessful();
-       $this->assertEquals('test.png', $task->files()->first()->name);
-       $this->assertEquals('test.png', $project->files()->first()->name);
+       $response->assertJsonFragment(['name' => 'test']);
+
+
+       // Then I have file in database asociated whit the task and the project
+       $this->assertContains('test.png', $task->fresh()->getFirstMediaUrl($task->project_id));
     }
 
     /** @test */

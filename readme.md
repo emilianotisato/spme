@@ -7,6 +7,7 @@ If you wanna use homestead, just edit your Homestead.yaml file in the root of th
 
 Run `composer install` to get all the packages.
 Run `npm install & npm run dev` to get all npm packages and compile.
+Run `php artisan storage:link` to set the storage link ([https://laravel.com/docs/5.5/filesystem#the-public-disk](https://laravel.com/docs/5.5/filesystem#the-public-disk))
 
 # Testing
 
