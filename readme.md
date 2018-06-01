@@ -1,3 +1,7 @@
+# Simple Project Management for Everyone
+ATENTION: Work in progress, don't use in production!!!
+
+
 # Requirements
 
 
